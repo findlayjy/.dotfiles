@@ -55,39 +55,40 @@ prompt_dir() {
 
 ## The git stuff is buggy: doesn't autoload, and throws errors outside git repos
 ## Git: branch/detached head, dirty status
-#prompt_git() {
-#  local color ref
-#  is_dirty() {
-#    test -n "$(git status --porcelain --ignore-submodules)"
-#  }
-#  ref="$vcs_info_msg_0_"
-#  if [[ -n "$ref" ]]; then
-#    if is_dirty; then
-#      color=yellow
-#      ref="${ref} $PLUSMINUS"
-#    else
-#      color=green
-#      ref="${ref} "
-#    fi
-#    if [[ "${ref/.../}" == "$ref" ]]; then
-#      ref="$BRANCH $ref"
-#    else
-#      ref="$DETACHED ${ref/.../}"
-#    fi
-#    prompt_segment $color $PRIMARY_FG
-#    print -Pn " $ref"
-#  fi
-#}
+prompt_git() {
+  local color ref
+  is_dirty() {
+    test -n "$(git status --porcelain --ignore-submodules)"
+  }
+  ref="$vcs_info_msg_0_"
+  if [[ -n "$ref" ]]; then
+    if is_dirty; then
+      color=yellow
+      ref="${ref} $PLUSMINUS"
+    else
+      color=green
+      ref="${ref} "
+    fi
+    if [[ "${ref/.../}" == "$ref" ]]; then
+      ref="$BRANCH $ref"
+    else
+      ref="$DETACHED ${ref/.../}"
+    fi
+    prompt_segment $color $PRIMARY_FG
+    print -Pn " $ref"
+  fi
+}
 
 prompt_jyf_main() {
   CURRENT_BG='NONE'
   prompt_context
   prompt_dir
- # prompt_git
+  prompt_git
   prompt_end
 }
 
 prompt_jyf_precmd() {
+  vcs_info
   PROMPT='%{%f%b%k%}$(prompt_jyf_main) '
 }
 
