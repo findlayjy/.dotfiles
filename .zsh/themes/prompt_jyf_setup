@@ -9,9 +9,6 @@ SEGMENT_SEPARATOR="\ue0b0"
 PLUSMINUS="\u00b1"
 BRANCH="\ue0a0"
 DETACHED="\u27a6"
-CROSS="\u2718"
-LIGHTNING="\u26a1"
-GEAR="\u2699"
 
 # Begin a segment: 
 # takes two arguments, background colour and foreground (text) colour. 
@@ -56,37 +53,37 @@ prompt_dir() {
   prompt_segment blue $PRIMARY_FG ' %2~ '
 }
 
+## The git stuff is buggy: doesn't autoload, and throws errors outside git repos
 ## Git: branch/detached head, dirty status
-prompt_git() {
-  local color ref
-  is_dirty() {
-    test -n "$(git status --porcelain --ignore-submodules)"
-  }
-  ref="$vcs_info_msg_0_"
-  if [[ -n "$ref" ]]; then
-    if is_dirty; then
-      color=yellow
-      ref="${ref} $PLUSMINUS"
-    else
-      color=green
-      ref="${ref} "
-    fi
-    if [[ "${ref/.../}" == "$ref" ]]; then
-      ref="$BRANCH $ref"
-    else
-      ref="$DETACHED ${ref/.../}"
-    fi
-    prompt_segment $color $PRIMARY_FG
-    print -Pn " $ref"
-  fi
-}
+#prompt_git() {
+#  local color ref
+#  is_dirty() {
+#    test -n "$(git status --porcelain --ignore-submodules)"
+#  }
+#  ref="$vcs_info_msg_0_"
+#  if [[ -n "$ref" ]]; then
+#    if is_dirty; then
+#      color=yellow
+#      ref="${ref} $PLUSMINUS"
+#    else
+#      color=green
+#      ref="${ref} "
+#    fi
+#    if [[ "${ref/.../}" == "$ref" ]]; then
+#      ref="$BRANCH $ref"
+#    else
+#      ref="$DETACHED ${ref/.../}"
+#    fi
+#    prompt_segment $color $PRIMARY_FG
+#    print -Pn " $ref"
+#  fi
+#}
 
 prompt_jyf_main() {
-  RETVAL=$?
   CURRENT_BG='NONE'
   prompt_context
   prompt_dir
-  prompt_git
+ # prompt_git
   prompt_end
 }
 
@@ -96,10 +93,16 @@ prompt_jyf_precmd() {
 
 prompt_jyf_setup() {
   autoload -Uz add-zsh-hook
+  autoload -Uz vcs_info
 
   prompt_opts=(cr subst percent)
 
   add-zsh-hook precmd prompt_jyf_precmd
+
+  zstyle ':vcs_info:*' enable git
+  zstyle ':vcs_info:*' check-for-changes false
+  zstyle ':vcs_info:git*' formats '%b'
+  zstyle ':vcs_info:git*' actionformats '%b (%a)'
 }
 
 prompt_jyf_setup "$@"
