@@ -1,4 +1,6 @@
-# Based on the agnoster theme (https://bl.ocks.org/agnoster/3712874)
+### === Basically a straight copy of the agnoster theme (https://bl.ocks.org/agnoster/3712874), with a few tweaks === ###
+
+# Colours
 CURRENT_BG='NONE'
 PRIMARY_FG=black
 
@@ -11,9 +13,9 @@ CROSS="\u2718"
 LIGHTNING="\u26a1"
 GEAR="\u2699"
 
-# Begin a segment
-# Takes two arguments, background and foreground. Both can be omitted,
-# rendering default background/foreground.
+# Begin a segment: 
+# takes two arguments, background colour and foreground (text) colour. 
+# Both can be omitted [or, rather, given as empty strings?], rendering default background/foreground.
 prompt_segment() {
   local bg fg
   [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
@@ -38,8 +40,9 @@ prompt_end() {
   CURRENT_BG=''
 }
 
+# Display username if it's different from default or if we're connected via SSH
 prompt_context() {
-  local user=`whoami`
+  local user=$(whoami)
 
   if [[ "$user" != "$DEFAULT_USER" ]]; then
     prompt_segment $PRIMARY_FG default "%(!.%{%F{yellow}%}.)$user "
@@ -48,9 +51,34 @@ prompt_context() {
   fi
 }
 
-# Dir: current working directory
+# Display current working directory
 prompt_dir() {
   prompt_segment blue $PRIMARY_FG ' %2~ '
+}
+
+## Git: branch/detached head, dirty status
+prompt_git() {
+  local color ref
+  is_dirty() {
+    test -n "$(git status --porcelain --ignore-submodules)"
+  }
+  ref="$vcs_info_msg_0_"
+  if [[ -n "$ref" ]]; then
+    if is_dirty; then
+      color=yellow
+      ref="${ref} $PLUSMINUS"
+    else
+      color=green
+      ref="${ref} "
+    fi
+    if [[ "${ref/.../}" == "$ref" ]]; then
+      ref="$BRANCH $ref"
+    else
+      ref="$DETACHED ${ref/.../}"
+    fi
+    prompt_segment $color $PRIMARY_FG
+    print -Pn " $ref"
+  fi
 }
 
 prompt_jyf_main() {
@@ -58,6 +86,7 @@ prompt_jyf_main() {
   CURRENT_BG='NONE'
   prompt_context
   prompt_dir
+  prompt_git
   prompt_end
 }
 
