@@ -53,29 +53,43 @@ prompt_dir() {
   prompt_segment blue $PRIMARY_FG ' %2~ '
 }
 
-## The git stuff is buggy: doesn't autoload, and throws errors outside git repos
 ## Git: branch/detached head, dirty status
 prompt_git() {
   local color ref
   is_dirty() {
     test -n "$(git status --porcelain --ignore-submodules)"
   }
+  is_main_branch() {
+      test ${ref} = "main"
+  }
   ref="$vcs_info_msg_0_"
-  if [[ -n "$ref" ]]; then
+  # Check if we're in a git repo; if not, do nothing; otherwise ...
+  if [[ -n "${ref}" ]]; then
+    # Check if we're out of sync with the remote
     if is_dirty; then
       color=yellow
-      ref="${ref} $PLUSMINUS"
+      if is_main_branch; then
+        ref="$PLUSMINUS"
+      else
+        ref="${ref} $PLUSMINUS"
+      fi
     else
       color=green
-      ref="${ref} "
+      if is_main_branch; then
+        ref=""
+      else
+        ref="${ref} "
+      fi
     fi
-    if [[ "${ref/.../}" == "$ref" ]]; then
-      ref="$BRANCH $ref"
+    # Check if HEAD is attached or not
+    if [[ $(git symbolic-ref -q HEAD) ]]; then
+      ref="$BRANCH ${ref}"
     else
-      ref="$DETACHED ${ref/.../}"
+      ref="$DETACHED ${ref}"
     fi
+    #
     prompt_segment $color $PRIMARY_FG
-    print -Pn " $ref"
+    print -Pn " ${ref}"
   fi
 }
 
