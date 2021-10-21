@@ -41,22 +41,22 @@ prompt_end() {
     print -n "%{%k%}"
   fi
   print -n "%{%f%}"
-  CURRENT_BG=''
+  CURRENT_BG=""
 }
 
 # Display status:
 # - was there an error
 # - are there background jobs?
 # - am I root
-#prompt_status() {
-#  local symbols
-#  symbols=()
-#  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}$CROSS"
-#  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}$GEAR"
-#  [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}$LIGHTNING"
-#  #
-#  [[ -n "$symbols" ]] && prompt_segment $PRIMARY_FG default " $symbols "
-#}
+prompt_status() {
+  local symbols
+  symbols=()
+  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}$CROSS"
+  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}$GEAR"
+  [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}$LIGHTNING"
+  #
+  [[ -n "$symbols" ]] && prompt_segment $PRIMARY_FG default " $symbols "
+}
 
 # Display username if it's different from default or if we're connected via SSH
 prompt_context() {
@@ -71,7 +71,7 @@ prompt_context() {
 
 # Display current working directory
 prompt_dir() {
-  prompt_segment blue $PRIMARY_FG ' %2~ '
+  prompt_segment blue $PRIMARY_FG " %2~ "
 }
 
 ## Git: branch/detached head, dirty status
@@ -117,7 +117,7 @@ prompt_git() {
 prompt_jyf_main() {
   RETVAL=$?
   CURRENT_BG='NONE'
-  #prompt_status
+  prompt_status
   prompt_context
   prompt_dir
   prompt_git
