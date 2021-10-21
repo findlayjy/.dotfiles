@@ -1,5 +1,9 @@
 ### === Basically a straight copy of the agnoster theme (https://bl.ocks.org/agnoster/3712874), with a few tweaks === ###
 
+## TODO:
+# [ ] On startup, first prompt has a blank character between prompt_dir and prompt_end. Sometimes disappears on resizing, so might just be a Windows Terminal thing. Disappears on next prompt, though, so I'm wondering if something doesn't get set properly initially.
+# [ ] When status symbols are implemented, context prompt adds a blank character at the end. I've disabled them for now therefore.
+
 # Colours
 CURRENT_BG='NONE'
 PRIMARY_FG=black
@@ -15,7 +19,7 @@ GEAR="\u2699"
 
 # Begin a segment: 
 # takes two arguments, background colour and foreground (text) colour. 
-# Both can be omitted [or, rather, given as empty strings?], rendering default background/foreground.
+# Both can be omitted [or, rather, given as empty strings? or given as 'default'?], rendering default background/foreground.
 prompt_segment() {
   local bg fg
   [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
@@ -44,22 +48,22 @@ prompt_end() {
 # - was there an error
 # - are there background jobs?
 # - am I root
-prompt_status() {
-  local symbols
-  symbols=()
-  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}$CROSS"
-  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}$GEAR"
-  [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}$LIGHTNING"
-
-  [[ -n "$symbols" ]] && prompt_segment $PRIMARY_FG default " $symbols "
-}
+#prompt_status() {
+#  local symbols
+#  symbols=()
+#  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}$CROSS"
+#  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}$GEAR"
+#  [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}$LIGHTNING"
+#  #
+#  [[ -n "$symbols" ]] && prompt_segment $PRIMARY_FG default " $symbols "
+#}
 
 # Display username if it's different from default or if we're connected via SSH
 prompt_context() {
   local user=$(whoami)
 
   if [[ "$user" != "$DEFAULT_USER" ]]; then
-    prompt_segment $PRIMARY_FG default "%(!.%{%F{yellow}%}.)$user "
+    prompt_segment $PRIMARY_FG default "%(!.%{%F{yellow}%}.)$user " 
   elif [[ -n "$SSH_CONNECTION" ]]; then
     prompt_segment $PRIMARY_FG default "%(!.%{%F{yellow}%}.)$user@%m "
   fi
@@ -113,7 +117,7 @@ prompt_git() {
 prompt_jyf_main() {
   RETVAL=$?
   CURRENT_BG='NONE'
-  prompt_status
+  #prompt_status
   prompt_context
   prompt_dir
   prompt_git
