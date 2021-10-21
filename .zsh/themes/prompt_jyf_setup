@@ -55,7 +55,7 @@ prompt_status() {
   [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}$GEAR"
   [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}$LIGHTNING"
   #
-  [[ -n "$symbols" ]] && prompt_segment $PRIMARY_FG default " $symbols "
+  [[ -n "$symbols" ]] && prompt_segment $PRIMARY_FG default " $symbols"
 }
 
 # Display username if it's different from default or if we're connected via SSH
@@ -63,9 +63,9 @@ prompt_context() {
   local user=$(whoami)
 
   if [[ "$user" != "$DEFAULT_USER" ]]; then
-    prompt_segment $PRIMARY_FG default "%(!.%{%F{yellow}%}.)$user " 
+    prompt_segment $PRIMARY_FG default "%(!.%{%F{yellow}%}.) $user " 
   elif [[ -n "$SSH_CONNECTION" ]]; then
-    prompt_segment $PRIMARY_FG default "%(!.%{%F{yellow}%}.)$user@%m "
+    prompt_segment $PRIMARY_FG default "%(!.%{%F{yellow}%}.) $user@%m "
   fi
 }
 
