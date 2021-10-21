@@ -60,7 +60,7 @@ prompt_git() {
     test -n "$(git status --porcelain --ignore-submodules)"
   }
   is_main_branch() {
-      test ${ref} = "main"
+      test ${ref} = "main" || test ${ref} = "master"
   }
   ref="$vcs_info_msg_0_"
   # Check if we're in a git repo; if not, do nothing; otherwise ...
