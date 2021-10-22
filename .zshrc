@@ -40,3 +40,6 @@ bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
 # Delete key
 bindkey "^[[3~" delete-char
+
+# For reasons as yet unknown (possibly just to do with Windows Terminal being what it is), my prompt doesn't display properly when the terminal is first opened, but on second loading it's fine -- so this just cleans that up.
+clear
