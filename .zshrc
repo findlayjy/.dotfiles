@@ -16,21 +16,35 @@ promptinit
 prompt jyf
 
 # A minimal prompt
-# PROMPT='%B%F{240}%1~%f%b %(!.#.>) '
+#PROMPT='%B%F{240}%1~%f%b %(!.#.>) '
 
 ## Loading custom dircolors
 # If there is a .dir_colors file, import it
 test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
 
 ### ===ALIASES=== ###
-# Login to foni server and switch to zsh
-alias foni="ssh jamief@foni.uio.no -t '/bin/zsh'"
+# Source .zshrc file
+alias sr="source ~/.zshrc"
+# Source .zshrc file
+alias er="vim ~/.zshrc"
+
+# TERMINAL STUFF
 # Colorize the ls output 
 alias ls='ls --color=auto'
 # Use a long listing format
 alias ll='ls -la'
 # Show hidden files
 alias l.='ls -d .* --color=auto'
+
+# OTHER PROGRAMS
+# Make it easier to open emacs clients
+alias emax='emacsclient -nc'
+
+# SSH
+# Login to foni server and switch to zsh
+alias foni="ssh jamief@foni.uio.no -t '/bin/zsh'"
+alias foni-mount="sshfs jamief@foni.uio.no: ~/foni"
+alias foni-unmount="fusermount3 -u ~/foni"
 
 ### ===KEY BINDS=== ###
 ## Making some keys behave as expected:
