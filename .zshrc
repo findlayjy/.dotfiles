@@ -48,7 +48,7 @@ alias unlu-r="cd ~/foni/unlu/git-repos"
 # Login to foni server and switch to zsh
 alias foni="ssh jamief@foni.uio.no -t '/bin/zsh'"
 # Mount/unmount remote drive on foni server
-alias foni-mont="sshfs jamief@foni.uio.no: ~/foni"
+alias foni-mnt="sshfs jamief@foni.uio.no: ~/foni"
 alias foni-umnt="fusermount3 -u ~/foni"
 # Run UNLU pipeline (runs in a subshell so you stay in your current directory; also assumes foni drive is mounted)
 pipeline() {
