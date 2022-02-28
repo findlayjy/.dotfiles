@@ -51,14 +51,13 @@ alias foni="ssh jamief@foni.uio.no -t '/bin/zsh'"
 alias foni-mnt="sshfs jamief@foni.uio.no: ~/foni"
 alias foni-umnt="fusermount3 -u ~/foni"
 # Run UNLU pipeline (runs in a subshell so you stay in your current directory; also assumes foni drive is mounted)
+# Without full log info
 pipeline() {
 	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/heads.dat  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat 2> /dev/null)
 }
-pipeline-full() {
+# With full log info
+pipeline-verbose() {
 	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/heads.dat  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat)
-}
-pipeline-templates(){
-	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/headsTemplates.dat  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat)
 }
 
 ### ===KEY BINDS=== ###
