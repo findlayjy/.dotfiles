@@ -31,7 +31,7 @@ set mouse=a
 set tabstop=4
 
 " Use space characters instead of tabs.
-set expandtab
+" set expandtab
 
 " While searching though a file incrementally highlight matching characters as you type.
 set incsearch
@@ -53,7 +53,7 @@ set showmode
 set showmatch
 
 " Use highlighting when doing a search.
-set hlsearch
+"set hlsearch
 
 " Set the commands to save in history default number is 20.
 set history=1000
