@@ -54,6 +54,9 @@ alias foni-umnt="fusermount3 -u ~/foni"
 pipeline() {
 	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/heads.dat  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat)
 }
+pipeline-templates(){
+	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/headsTemplates.dat  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat)
+}
 
 ### ===KEY BINDS=== ###
 ## Making some keys behave as expected:
