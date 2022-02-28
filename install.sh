@@ -1,8 +1,39 @@
 #!/bin/zsh
-# Very basic install script which symlinks a few dotfiles
+# Basic install script which symlinks some dotfiles if they're not already present. Use -f option to force it to overwrite the files if they already exist.
 
-ln -s "${PWD}/.zsh" ~/.zsh
-ln -s "${PWD}/.zshrc" ~/.zshrc
-ln -s "${PWD}/.zshenv" ~/.zshenv
-ln -s "${PWD}/.dir_colors" ~/.dir_colors
-# ln -s "${PWD}/.config" ~/.config
+# Lists of dotfiles
+shell_dotfiles=(.zsh .zshrc .zshenv .dir_colors .vimrc)
+config_dotfiles=()
+
+
+# Symlink dotfile to home directory if not already present there
+install_dotfile(){
+[ -e ~/$1 ] || ln -s "${PWD}/$1" ~/$1
+}
+
+# Symlink dotfile to home directory even if present, overwriting existing file
+force_install_dotfile(){
+rm -rf ~/$1
+ln -s "${PWD}/$1" ~/$1
+}
+
+while getopts ":f" option; do
+    case $option in 
+        f) # Overwrite existing files by removing them first
+           for file in $shell_dotfiles[@]; do
+               force_install_dotfile $file
+           done
+           for file in $config_dotfiles[@]; do
+                force_install_dotfile .config/$file
+           done
+           exit;;
+    esac
+done
+
+for file in $shell_dotfiles[@]; do
+    install_dotfile $file
+done
+
+for file in $config_dotfiles[@]; do
+    install_dotfile .config/$file
+done
