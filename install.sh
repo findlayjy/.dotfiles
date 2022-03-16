@@ -3,7 +3,7 @@
 
 # Lists of dotfiles
 shell_dotfiles=(.zsh .zshrc .zshenv .dir_colors .vimrc)
-config_dotfiles=()
+config_dotfiles=(alacritty betterlockscreenrc i3 picom polybar ranger rofi spicetify spotify)
 
 
 # Symlink dotfile to home directory if not already present there
