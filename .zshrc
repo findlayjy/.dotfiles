@@ -40,11 +40,11 @@ alias l.='ls -d .*'
 # Make it easier to open emacs clients
 alias emax='emacsclient -nc'
 
-# UiO STUFF
+# UNLU STUFF
 # Switch to local UNLU project dir
 alias unlu-l="cd ~/Dropbox/academic/jobs/oslo-unlu-postdoc/project"
 # Switch to remote UNLU dir containing github repos
-alias unlu-r="cd ~/foni/unlu/git-repos"
+alias unlu-r="cd ~/foni/unlu/git-repos/glue-for-UD"
 # Login to foni server and switch to zsh
 alias foni="ssh jamief@foni.uio.no -t '/bin/zsh'"
 # Mount/unmount remote drive on foni server
@@ -59,6 +59,19 @@ pipeline() {
 pipeline-verbose() {
 	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/heads.dat  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat)
 }
+# With explanation
+pipeline-explain() {
+	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh -e ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/heads.dat  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat)
+}
+# Output to a file called 'output' for comparison
+pipeline-compare() {
+	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh -o ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/heads.dat  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat 1> ~/foni/unlu/git-repos/glue-for-UD/output 2> /dev/null)
+}
+
+# Compare results
+compare-results() {
+(cd ~/foni/unlu/git-repos/container &&  python compare_results.py ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/test.conllu.output >~/foni/unlu/git-repos/glue-for-UD/comparison 2>~/foni/unlu/git-repos/glue-for-UD/log)
+}
 
 ### ===KEY BINDS=== ###
 ## Making some keys behave as expected:
@@ -71,3 +84,8 @@ bindkey "^[[3~" delete-char
 
 # For reasons as yet unknown (possibly just to do with Windows Terminal being what it is), my prompt doesn't display properly when the terminal is first opened, but on second loading it's fine -- so this just cleans that up.
 clear
+
+## PYENV (run different versions of Python)
+# setup
+eval "$(pyenv init --path)"
+eval "$(pyenv virtualenv-init -)"
