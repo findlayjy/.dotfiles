@@ -92,4 +92,4 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 
 ## Initialising git-subrepo (https://github.com/ingydotnet/git-subrepo)
-source ~/git-subrepo/.rc
+# source ~/git-subrepo/.rc
