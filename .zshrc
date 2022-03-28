@@ -51,17 +51,19 @@ alias foni="ssh jamief@foni.uio.no -t '/bin/zsh'"
 alias foni-mnt="sshfs jamief@foni.uio.no: ~/foni"
 alias foni-umnt="fusermount3 -u ~/foni"
 # Run UNLU pipeline (runs in a subshell so you stay in your current directory; also assumes foni drive is mounted)
+RULESFILE="heads.dat"
+
 # Without full log info
 pipeline() {
-	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/heads.dat  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat 2> /dev/null)
+	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/$RULESFILE  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat 2> /dev/null)
 }
 # With full log info
 pipeline-verbose() {
-	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/heads.dat  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat)
+	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/$RULESFILE  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat)
 }
 # With explanation
 pipeline-explain() {
-	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh -e ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/heads.dat  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat)
+	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh -e ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/$RULESFILE  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat)
 }
 # Output to a file called 'output' for comparison
 pipeline-compare() {
