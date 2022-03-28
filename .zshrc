@@ -40,6 +40,12 @@ alias l.='ls -d .*'
 # Make it easier to open emacs clients
 alias emax='emacsclient -nc'
 
+# WSL STUFF
+# Copy To Windows (i.e. copy file to Windows Downloads folder)
+ctw(){cp "$1" /mnt/c/Users/Jamie/Downloads}
+# Move to Windows (i.e. move tile to Windows Downloads folder)
+mtw(){cp "$1" /mnt/c/Users/Jamie/Downloads}
+
 # UNLU STUFF
 # Switch to local UNLU project dir
 alias unlu-l="cd ~/Dropbox/academic/jobs/oslo-unlu-postdoc/project"
