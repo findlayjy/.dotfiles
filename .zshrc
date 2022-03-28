@@ -48,13 +48,15 @@ mtw(){cp "$1" /mnt/c/Users/Jamie/Downloads}
 
 # UNLU STUFF
 # Switch to local UNLU project dir
-alias unlu-l="cd ~/Dropbox/academic/jobs/oslo-unlu-postdoc/project"
+alias unlu-l="cd ~/Dropbox/academic/jobs/oslo-unlu-postdoc/project/git-repos/glue-for-UD"
 # Switch to remote UNLU dir containing github repos
 alias unlu-r="cd ~/foni/unlu/git-repos/glue-for-UD"
 # Login to foni server and switch to zsh
-alias foni="ssh jamief@foni.uio.no -t '/bin/zsh'"
+# alias foni="ssh jamief@foni.uio.no -t '/bin/zsh'"
+alias foni="ssh jamief@foni.uio.no -J jamief@login.uio.no -t '/bin/zsh'"
 # Mount/unmount remote drive on foni server
-alias foni-mnt="sshfs jamief@foni.uio.no: ~/foni"
+# alias foni-mnt="sshfs jamief@foni.uio.no: ~/foni"
+alias foni-mnt="sshfs jamief@foni.uio.no: ~/foni -o ssh_command='ssh -J jamief@login.uio.no'"
 alias foni-umnt="fusermount3 -u ~/foni"
 # Run UNLU pipeline (runs in a subshell so you stay in your current directory; also assumes foni drive is mounted)
 RULESFILE="heads.dat"
