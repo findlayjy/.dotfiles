@@ -59,28 +59,31 @@ alias foni="ssh jamief@foni.uio.no -J jamief@login.uio.no -t '/bin/zsh'"
 alias foni-mnt="sshfs jamief@foni.uio.no: ~/foni -o ssh_command='ssh -J jamief@login.uio.no'"
 alias foni-umnt="fusermount3 -u ~/foni"
 # Run UNLU pipeline (runs in a subshell so you stay in your current directory; also assumes foni drive is mounted)
-RULESFILE="heads.dat"
+GLUE_FOR_UD_PREFIX="$HOME/foni/unlu/git-repos/glue-for-UD"
+RULESFILE="$GLUE_FOR_UD_PREFIX/rules.dat"
+CHOPFILE="$GLUE_FOR_UD_PREFIX/chopRules.dat"
+TEMPLATESFILE="$GLUE_FOR_UD_PREFIX/templates.dat"
 
 # Without full log info
 pipeline() {
-	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/$RULESFILE  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat 2> /dev/null)
+	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh $GLUE_FOR_UD_PREFIX/$1 $RULESFILE  $CHOPFILE 2> $GLUE_FOR_UD_PREFIX/log)
 }
 # With full log info
 pipeline-verbose() {
-	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/$RULESFILE  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat)
+	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh $GLUE_FOR_UD_PREFIX/$1 $RULESFILE  $CHOPFILE)
 }
 # With explanation
 pipeline-explain() {
-	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh -e ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/$RULESFILE  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat)
+	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh -e $GLUE_FOR_UD_PREFIX/$1 $RULESFILE  $CHOPFILE)
 }
 # Output to a file called 'output' for comparison
 pipeline-compare() {
-	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh -o ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/heads.dat  ~/foni/unlu/git-repos/glue-for-UD/chopRules.dat 1> ~/foni/unlu/git-repos/glue-for-UD/output 2> /dev/null)
+	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh -o $GLUE_FOR_UD_PREFIX/$1 $RULESFILE  $CHOPFILE 2> /dev/null)
 }
 
 # Compare results
 compare-results() {
-(cd ~/foni/unlu/git-repos/container &&  python compare_results.py ~/foni/unlu/git-repos/glue-for-UD/"$1" ~/foni/unlu/git-repos/glue-for-UD/test.conllu.output >~/foni/unlu/git-repos/glue-for-UD/comparison 2>~/foni/unlu/git-repos/glue-for-UD/log)
+(cd ~/foni/unlu/git-repos/container &&  python compare_results.py "$GLUE_FOR_UD_PREFIX"/"$1" "$GLUE_FOR_UD_PREFIX"/test.conllu.output >"$GLUE_FOR_UD_PREFIX"/comparison 2>"$GLUE_FOR_UD_PREFIX"/log)
 }
 
 ### ===KEY BINDS=== ###
