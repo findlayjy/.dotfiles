@@ -58,3 +58,11 @@ set showmatch
 " Set the commands to save in history default number is 20.
 set history=1000
 
+" Enable copy to clipboard in WSL (using * register, so "*y to yank to
+" clipboard)
+if system('uname -r') =~ "Microsoft"
+    augroup Yank
+        autocmd!
+        autocmd TextYankPost * :call system('/mnt/c/windows/system32/clip.exe ',@")
+        augroup END
+endif
