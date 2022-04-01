@@ -68,6 +68,10 @@ TEMPLATESFILE="$GLUE_FOR_UD_PREFIX/templates.dat"
 pipeline() {
 	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh $GLUE_FOR_UD_PREFIX/$1 $RULESFILE  $CHOPFILE 2> $GLUE_FOR_UD_PREFIX/log)
 }
+# Output to file
+pipeline-inspect() {
+	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh $GLUE_FOR_UD_PREFIX/$1 $RULESFILE  $CHOPFILE 1> $GLUE_FOR_UD_PREFIX/output 2> $GLUE_FOR_UD_PREFIX/log)
+}
 # With full log info
 pipeline-verbose() {
 	(cd ~/foni/unlu/git-repos/container && ./run_pipeline.sh $GLUE_FOR_UD_PREFIX/$1 $RULESFILE  $CHOPFILE)
