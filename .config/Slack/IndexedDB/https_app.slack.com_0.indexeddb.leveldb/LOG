@@ -1,3 +1,0 @@
-2022/02/28-10:16:03.087 34fd Creating DB /home/jamief/.config/Slack/IndexedDB/https_app.slack.com_0.indexeddb.leveldb since it was missing.
-2022/02/28-10:16:03.089 34fd Reusing MANIFEST /home/jamief/.config/Slack/IndexedDB/https_app.slack.com_0.indexeddb.leveldb/MANIFEST-000001
-2022/03/08-12:46:36.540 56a7 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
