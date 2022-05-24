@@ -40,6 +40,8 @@ alias l.='ls -d .*'
 # Make it easier to open emacs clients
 alias emax='emacsclient -nc'
 alias wemax='emacsclientw.exe'
+# 'vi' as an alias for 'vim'
+alias vi='vim'
 
 # WSL STUFF
 # Copy To Windows (i.e. copy file to Windows Downloads folder)
