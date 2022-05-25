@@ -1,8 +1,10 @@
 # Dotfiles
-An initial pass at my dotfiles for Arch, using `i3-gaps` window manager.
+Some dotfiles for my linux system. Currently using Pop!\_OS.
+
+- rc files for `zsh` and `vim`.
+- custom theme file for `zsh`.
+- Nord dircolors.
+- Config files for `alacritty` terminal emulator, `albert` launcher, `neofetch` and `ranger`, along with my `autostart` settings.
 
 ## Setup
 Clone the repo, navigate to it, then run `./install.sh`, which will symlink the dotfiles into your `$HOME`, provided they're not already present (use the `-f` option to forcefully overwrite any existing versions of those files).
-
-## Missing repos
-Need to clone [`ranger_devicons`](https://github.com/alexanderjeurissen/ranger_devicons) into `.config/ranger/plugins/ranger_devicons` and [`Themes`](https://github.com/spicetify/spicetify-themes) into `.config/spicetify/Themes`.
