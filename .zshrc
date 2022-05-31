@@ -36,67 +36,34 @@ alias ll='ls -la'
 # Show hidden files
 alias l.='ls -d .*'
 
+# NAVIGATION SHORTCUTS
+# Switch to local UNLU project dir
+alias unlu-l="cd ~/Dropbox/academic/jobs/oslo-unlu-postdoc/project/git-repos/glue-for-UD"
+# Switch to remote UNLU dir containing github repos
+alias unlu-r="cd ~/foni/unlu/git-repos/glue-for-UD"
+# Switch to academic folder in Dropbox
+alias academic="cd ~/Dropbox/academic"
+# Switch to in-progress folder
+alias inprog="cd ~/Dropbox/academic/in-progress"
+
 # POP!_OS SHORTCUTS
 # update apps
 alias update='sudo apt update && sudo apt upgrade'
 
 # OTHER PROGRAMS
 # Make it easier to open emacs clients
+# Open in existing emacs server
 alias emax='emacsclient -nc'
+# Same, but for Windows
 alias wemax='emacsclientw.exe'
-# 'vi' as an alias for 'vim' (git tries to run vi)
+# 'vi' as an alias for 'vim'
 alias vi='vim'
 
 # WSL STUFF
 # Copy To Windows (i.e. copy file to Windows Downloads folder)
 ctw(){cp "$@" /mnt/c/Users/Jamie/Downloads}
 # Move to Windows (i.e. move tile to Windows Downloads folder)
-mtw(){cp "$@" /mnt/c/Users/Jamie/Downloads}
-
-# UNLU STUFF
-# Switch to local UNLU project dir
-alias unlu-l="cd ~/Dropbox/academic/jobs/oslo-unlu-postdoc/project/git-repos/glue-for-UD"
-# Switch to remote UNLU dir containing github repos
-alias unlu-r="cd ~/foni/unlu/git-repos/glue-for-UD"
-# Login to foni server and switch to zsh
-# alias foni="ssh jamief@foni.uio.no -t '/bin/zsh'"
-alias foni="ssh jamief@foni.uio.no -J jamief@login.uio.no -t '/bin/zsh'"
-# Mount/unmount remote drive on foni server
-# alias foni-mnt="sshfs jamief@foni.uio.no: ~/foni"
-alias foni-mnt="sshfs jamief@foni.uio.no: ~/foni -o ssh_command='ssh -J jamief@login.uio.no'"
-alias foni-umnt="fusermount3 -u ~/foni"
-# Run UNLU pipeline (runs in a subshell so you stay in your current directory; also assumes foni drive is mounted)
-GLUE_FOR_UD_PREFIX="$HOME/Dropbox/academic/jobs/oslo-unlu-postdoc/project/git-repos/glue-for-UD"
-CONTAINER_DIR="$HOME/Dropbox/academic/jobs/oslo-unlu-postdoc/project/git-repos/container"
-RULESFILE="$GLUE_FOR_UD_PREFIX/rules.dat"
-CHOPFILE="$GLUE_FOR_UD_PREFIX/chopRules.dat"
-TEMPLATESFILE="$GLUE_FOR_UD_PREFIX/templates.dat"
-
-# Without full log info
-pipeline() {
-	(cd $CONTAINER_DIR && ./run_pipeline.sh $GLUE_FOR_UD_PREFIX/$1 $RULESFILE  $CHOPFILE 2> $GLUE_FOR_UD_PREFIX/log)
-}
-# Output to file
-pipeline-inspect() {
-	(cd $CONTAINER_DIR && ./run_pipeline.sh $GLUE_FOR_UD_PREFIX/$1 $RULESFILE  $CHOPFILE 1> $GLUE_FOR_UD_PREFIX/output 2> $GLUE_FOR_UD_PREFIX/log)
-}
-# With full log info
-pipeline-verbose() {
-	(cd $CONTAINER_DIR && ./run_pipeline.sh $GLUE_FOR_UD_PREFIX/$1 $RULESFILE  $CHOPFILE)
-}
-# With explanation
-pipeline-explain() {
-	(cd $CONTAINER_DIR && ./run_pipeline.sh -e $GLUE_FOR_UD_PREFIX/$1 $RULESFILE  $CHOPFILE)
-}
-# Output to a file called 'output' for comparison
-pipeline-compare() {
-	(cd $CONTAINER_DIR && ./run_pipeline.sh -o $GLUE_FOR_UD_PREFIX/$1 $RULESFILE  $CHOPFILE 2> /dev/null)
-}
-
-# Compare results
-compare-results() {
-(cd $CONTAINER_DIR &&  python compare_results.py "$GLUE_FOR_UD_PREFIX"/"$1" "$GLUE_FOR_UD_PREFIX"/test.conllu.output >"$GLUE_FOR_UD_PREFIX"/comparison 2>"$GLUE_FOR_UD_PREFIX"/log)
-}
+mtw(){mv "$@" /mnt/c/Users/Jamie/Downloads}
 
 ### ===KEY BINDS=== ###
 ## Making some keys behave as expected:
@@ -116,5 +83,5 @@ if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
 
-## Initialising git-subrepo (https://github.com/ingydotnet/git-subrepo)
-# source ~/git-subrepo/.rc
+## Load UNLU shortcuts and commands
+[ -f $HOME/.unlu ] && source $HOME/.unlu

@@ -2,7 +2,7 @@
 # Basic install script which symlinks some dotfiles if they're not already present. Use -f option to force it to overwrite the files if they already exist.
 
 # Lists of dotfiles
-shell_dotfiles=(.zsh .zshrc .zshenv .dir_colors .vimrc)
+shell_dotfiles=(.zsh .zshrc .zshenv .dir_colors .vimrc .unlu)
 config_dotfiles=(alacritty albert autostart neofetch ranger)
 
 

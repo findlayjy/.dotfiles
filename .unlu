@@ -1,0 +1,41 @@
+# UNLU STUFF
+# Login to foni server and switch to zsh
+# alias foni="ssh jamief@foni.uio.no -t '/bin/zsh'"
+alias foni="ssh jamief@foni.uio.no -J jamief@login.uio.no -t '/bin/zsh'"
+# Mount/unmount remote drive on foni server
+# alias foni-mnt="sshfs jamief@foni.uio.no: ~/foni"
+alias foni-mnt="sshfs jamief@foni.uio.no: ~/foni -o ssh_command='ssh -J jamief@login.uio.no'"
+alias foni-umnt="fusermount3 -u ~/foni"
+
+# Run UNLU pipeline (runs in a subshell so you stay in your current directory
+ROOT_DIR="$HOME/Dropbox/academic/jobs/oslo-unlu-postdoc/project/git-repos"
+GLUE_FOR_UD="$ROOT_DIR/glue-for-UD"
+CONTAINER="$ROOT_DIR/container"
+RULES_FILE="$GLUE_FOR_UD/rules.dat"
+CHOP_FILE="$GLUE_FOR_UD/chopRules.dat"
+TEMPLATES_FILE="$GLUE_FOR_UD/templates.dat"
+
+# Without full log info
+pipeline() {
+	(cd $CONTAINER && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE 2> $GLUE_FOR_UD/log)
+    }
+# Output to file
+pipeline-inspect() {
+	(cd $CONTAINER && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE  $CHOP_FILE 1> $GLUE_FOR_UD/output 2> $GLUE_FOR_UD/log)
+}
+# With full log info
+pipeline-verbose() {
+	(cd $CONTAINER && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE  $CHOP_FILE)
+}
+# With explanation
+pipeline-explain() {
+	(cd $CONTAINER && ./run_pipeline.sh -e $GLUE_FOR_UD/$1 $RULES_FILE  $CHOP_FILE)
+}
+# Output to a file called 'output' for comparison
+pipeline-compare() {
+	(cd $CONTAINER && ./run_pipeline.sh -o $GLUE_FOR_UD/$1 $RULES_FILE  $CHOP_FILE 2> /dev/null)
+}
+# Compare results
+compare-results() {
+(cd $CONTAINER &&  python compare_results.py "$GLUE_FOR_UD"/"$1" "$GLUE_FOR_UD"/test.conllu.output >"$GLUE_FOR_UD"/comparison 2>"$GLUE_FOR_UD"/log)
+}
