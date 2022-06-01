@@ -37,7 +37,8 @@ pipeline-compare() {
 }
 # Clean up generated files
 pipeline-clean() {
-	rm *.output
+	rm output log
+	rm *.output 
 }
 # Compare results
 compare-results() {
