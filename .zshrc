@@ -36,6 +36,10 @@ alias ll='ls -la'
 # Show hidden files
 alias l.='ls -d .*'
 
+# GIT
+# A shorter add + commit
+gadmit(){git add $1 && git commit -m $2}
+
 # NAVIGATION SHORTCUTS
 # Switch to local UNLU project dir
 alias unlu-l="cd ~/Dropbox/academic/jobs/oslo-unlu-postdoc/project/git-repos/glue-for-UD"
