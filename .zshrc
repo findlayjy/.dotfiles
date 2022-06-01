@@ -24,9 +24,9 @@ test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
 
 ### ===ALIASES=== ###
 # Source .zshrc file
-alias sr="source ~/.zshrc"
+alias sr='source ~/.zshrc'
 # Edit .zshrc file
-alias er="vim ~/.zshrc"
+alias er='vim ~/.zshrc'
 
 # TERMINAL STUFF
 # Colorize the ls output 
@@ -39,16 +39,20 @@ alias l.='ls -d .*'
 # GIT
 # A shorter add + commit
 gadmit(){git add $1 && git commit -m $2}
+# Do this for the whole directory
+# alias gadmit='git add . && git commit -m'
+# Git status
+alias gs='git status'
 
 # NAVIGATION SHORTCUTS
 # Switch to local UNLU project dir
-alias unlu-l="cd ~/Dropbox/academic/jobs/oslo-unlu-postdoc/project/git-repos/glue-for-UD"
+alias unlu-l='cd ~/Dropbox/academic/jobs/oslo-unlu-postdoc/project/git-repos/glue-for-UD'
 # Switch to remote UNLU dir containing github repos
-alias unlu-r="cd ~/foni/unlu/git-repos/glue-for-UD"
+alias unlu-r='cd ~/foni/unlu/git-repos/glue-for-UD'
 # Switch to academic folder in Dropbox
-alias academic="cd ~/Dropbox/academic"
+alias academic='cd ~/Dropbox/academic'
 # Switch to in-progress folder
-alias inprog="cd ~/Dropbox/academic/in-progress"
+alias inprog='cd ~/Dropbox/academic/in-progress'
 
 # POP!_OS SHORTCUTS
 # update apps
