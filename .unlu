@@ -31,7 +31,7 @@ pipeline-explain() {
 pipeline-inspect() {
 	(cd $CONTAINER && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE  $CHOP_FILE 1> $GLUE_FOR_UD/$(basename $1 .conllu).output  2> $GLUE_FOR_UD/log)
 }
-# Output to a file called 'compare' for comparison
+# Output to a file called '[...].compare' for comparison
 pipeline-compare() {
 	(cd $CONTAINER && ./run_pipeline.sh -o $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE 1> $GLUE_FOR_UD/$(basename $1 .conllu).compare 2> /dev/null)
 }
