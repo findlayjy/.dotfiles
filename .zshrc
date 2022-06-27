@@ -66,6 +66,8 @@ alias emax='emacsclient -nc'
 alias wemax='emacsclientw.exe'
 # 'vi' as an alias for 'vim'
 alias vi='vim'
+# 'python' as an alias for 'python3'
+alias python='python3'
 
 # WSL STUFF
 # Copy To Windows (i.e. copy file to Windows Downloads folder)
