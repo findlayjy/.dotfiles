@@ -17,23 +17,23 @@ TEMPLATES_FILE="$GLUE_FOR_UD/templates.dat"
 
 # Without full log info
 pipeline() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE 2> $GLUE_FOR_UD/log)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
     }
 # With full log info
 pipeline-verbose() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE  $CHOP_FILE)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE)
 }
 # With explanation
 pipeline-explain() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh -e $GLUE_FOR_UD/$1 $RULES_FILE  $CHOP_FILE)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -e $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE)
 }
 # Output to file
 pipeline-inspect() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE  $CHOP_FILE 1> $GLUE_FOR_UD/$(basename $1 .conllu).output  2> $GLUE_FOR_UD/log)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE  $CHOP_FILE $TEMPLATES_FILE 1> $GLUE_FOR_UD/$(basename $1 .conllu).output  2> $GLUE_FOR_UD/log)
 }
 # Output to a file called '[...].compare' for comparison
 pipeline-compare() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh -o $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE 1> $GLUE_FOR_UD/$(basename $1 .conllu).compare 2> /dev/null)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -o $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 1> $GLUE_FOR_UD/$(basename $1 .conllu).compare 2> /dev/null)
 }
 # Clean up generated files
 pipeline-clean() {
