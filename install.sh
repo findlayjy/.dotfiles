@@ -2,7 +2,7 @@
 # Basic install script which symlinks some dotfiles if they're not already present. Use -f option to force it to overwrite the files if they already exist.
 
 # Lists of dotfiles
-shell_dotfiles=(.zsh .zshrc .zshenv .dir_colors .vimrc .unlu)
+home_dotfiles=(.zsh .zshrc .zshenv .dir_colors .vimrc .unlu .latexmkrc)
 config_dotfiles=(alacritty albert autostart neofetch ranger)
 
 
@@ -20,7 +20,7 @@ ln -s "${PWD}/$1" ~/$1
 while getopts ":f" option; do
     case $option in 
         f) # Overwrite existing files by removing them first
-           for file in $shell_dotfiles[@]; do
+           for file in $home_dotfiles[@]; do
                force_install_dotfile $file
            done
            for file in $config_dotfiles[@]; do
@@ -30,7 +30,7 @@ while getopts ":f" option; do
     esac
 done
 
-for file in $shell_dotfiles[@]; do
+for file in $home_dotfiles[@]; do
     install_dotfile $file
 done
 
