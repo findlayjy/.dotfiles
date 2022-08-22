@@ -1,8 +1,9 @@
 # Dotfiles
 Some dotfiles for my linux system. Currently using Pop!\_OS.
 
-- rc files for `zsh` and `vim`.
-- custom theme file for `zsh`.
+- `zsh`: rc file and custom theme.
+- minimal rc file for `vim`.
+- rc file for `latexmkrc` (adding my custom directories too).
 - Nord dircolors.
 - Config files for `alacritty` terminal emulator, `albert` launcher, `neofetch` and `ranger`, along with my `autostart` settings.
 
