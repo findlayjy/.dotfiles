@@ -8,9 +8,9 @@ alias foni-mnt="sshfs jamief@foni.uio.no: ~/foni -o ssh_command='ssh -J jamief@l
 alias foni-umnt="fusermount3 -u ~/foni"
 
 # Run UNLU pipeline (runs in a subshell so you stay in your current directory
-ROOT_DIR="$HOME/Dropbox/academic/jobs/oslo-unlu-postdoc/project/git-repos"
-GLUE_FOR_UD="$ROOT_DIR/glue-for-UD"
-PIPELINE_DIR="$ROOT_DIR/pipeline"
+REPOS="$HOME/Dropbox/academic/jobs/oslo-unlu-postdoc/project/git-repos"
+GLUE_FOR_UD="$REPOS/glue-for-UD"
+PIPELINE_DIR="$REPOS/pipeline"
 RULES_FILE="$GLUE_FOR_UD/rules.dat"
 CHOP_FILE="$GLUE_FOR_UD/chopRules.dat"
 TEMPLATES_FILE="$GLUE_FOR_UD/templates.dat"
@@ -19,6 +19,12 @@ TEMPLATES_FILE="$GLUE_FOR_UD/templates.dat"
 pipeline() {
 	(cd $PIPELINE_DIR && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
     }
+
+# Only show single proof with fewest DUMMY placeholders
+pipeline-min() {
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -l $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+    }
+
 # With full log info
 pipeline-verbose() {
 	(cd $PIPELINE_DIR && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE)
