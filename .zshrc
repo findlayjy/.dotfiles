@@ -69,6 +69,11 @@ alias vi='vim'
 # 'python' as an alias for 'python3'
 alias python='python3'
 
+# Connect to Oracle VM running Civ5 server and forward the relevant port
+alias civ-server-pf='ssh -L 5900:127.0.0.1:5900 opc@129.151.217.136'
+# Just connect and don't do any port forwarding
+alias civ-server='ssh opc@129.151.217.136'
+
 # WSL STUFF
 # Copy To Windows (i.e. copy file to Windows Downloads folder)
 ctw(){cp "$@" /mnt/c/Users/Jamie/Downloads}
