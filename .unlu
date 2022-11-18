@@ -14,6 +14,7 @@ PIPELINE_DIR="$REPOS/pipeline"
 RULES_FILE="$GLUE_FOR_UD/rules.dat"
 CHOP_FILE="$GLUE_FOR_UD/chopRules.dat"
 TEMPLATES_FILE="$GLUE_FOR_UD/templates.dat"
+DE_TEMPLATES_FILE="$GLUE_FOR_UD/de-templates.dat"
 
 # Without full log info
 pipeline() {
@@ -40,11 +41,15 @@ pipeline-clause-min() {
 
 # Run via Stanza
 pipeline-stanza() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh -s $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -s$1 $GLUE_FOR_UD/$2 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
 }
 # Run via Stanza and only show single proof with fewest DUMMY placeholders
 pipeline-stanza-min() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh -s -l $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -s$1 -l $GLUE_FOR_UD/$2 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+}
+# Run via Stanza and only show single proof with fewest DUMMY placeholders -- German version -- NEEDS SOMETHING TO BE DONE ABOUT STANZA MODE
+pipeline-stanza-min-de() {
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -s$1 -l $GLUE_FOR_UD/$2 $RULES_FILE $CHOP_FILE $DE_TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
 }
 
 # With full log info
