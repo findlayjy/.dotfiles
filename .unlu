@@ -18,53 +18,64 @@ DE_TEMPLATES_FILE="$GLUE_FOR_UD/de-templates.dat"
 
 # Without full log info
 pipeline() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+	# (cd $PIPELINE_DIR && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -f -X$1 $GLUE_FOR_UD/$2 2> $GLUE_FOR_UD/log)
     }
 # Only show single proof with fewest DUMMY placeholders
 pipeline-min() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh -l $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+	# (cd $PIPELINE_DIR && ./run_pipeline.sh -l $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -l -f -X$1 $GLUE_FOR_UD/$2 2> $GLUE_FOR_UD/log)
     }
 
 # Output to file
 pipeline-inspect() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE  $CHOP_FILE $TEMPLATES_FILE 1> $GLUE_FOR_UD/$(basename $1 .conllu).output  2> $GLUE_FOR_UD/log)
+	# (cd $PIPELINE_DIR && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE  $CHOP_FILE $TEMPLATES_FILE 1> $GLUE_FOR_UD/$(basename $1 .conllu).output  2> $GLUE_FOR_UD/log)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -f -X$1 $GLUE_FOR_UD/$2  1> $GLUE_FOR_UD/$(basename $1 .conllu).output  2> $GLUE_FOR_UD/log)
 }
 
 # Output clause notation rather than DRS
 pipeline-clause-min() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh -c $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+	# (cd $PIPELINE_DIR && ./run_pipeline.sh -c $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -c -f -X$1 $GLUE_FOR_UD/$2 2> $GLUE_FOR_UD/log)
     }
 # Output clause notation rather than DRS and only show single proof with fewest DUMMY placeholders
 pipeline-clause-min() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh -lc $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+	# (cd $PIPELINE_DIR && ./run_pipeline.sh -lc $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -lc -f -X$1 $GLUE_FOR_UD/$2 2> $GLUE_FOR_UD/log)
     }
 
 # Run via Stanza
 pipeline-stanza() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh -s$1 $GLUE_FOR_UD/$2 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+	# (cd $PIPELINE_DIR && ./run_pipeline.sh -s$1 $GLUE_FOR_UD/$2 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -s -f -X$1 $GLUE_FOR_UD/$2 2> $GLUE_FOR_UD/log)
 }
 # Run via Stanza and only show single proof with fewest DUMMY placeholders
 pipeline-stanza-min() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh -s$1 -l $GLUE_FOR_UD/$2 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+	# (cd $PIPELINE_DIR && ./run_pipeline.sh -s$1 -l $GLUE_FOR_UD/$2 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -ls -f -X$1 $GLUE_FOR_UD/$2 2> $GLUE_FOR_UD/log)
 }
 # Run via Stanza and only show single proof with fewest DUMMY placeholders -- German version -- NEEDS SOMETHING TO BE DONE ABOUT STANZA MODE
-pipeline-stanza-min-de() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh -s$1 -l $GLUE_FOR_UD/$2 $RULES_FILE $CHOP_FILE $DE_TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
-}
+# REDUNDANT now that we have a per-language config
+# pipeline-stanza-min-de() {
+# 	(cd $PIPELINE_DIR && ./run_pipeline.sh -s$1 -l $GLUE_FOR_UD/$2 $RULES_FILE $CHOP_FILE $DE_TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
+# }
 
 # With full log info
 pipeline-verbose() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE)
+	# (cd $PIPELINE_DIR && ./run_pipeline.sh $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -f -X$1 $GLUE_FOR_UD/$2)
 }
 
 # With explanation
 pipeline-explain() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh -e $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE)
+	# (cd $PIPELINE_DIR && ./run_pipeline.sh -e $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -ef -X$1 $GLUE_FOR_UD/$2)
 }
 
 # Output to a file called '[...].compare' for comparison
 pipeline-compare() {
-	(cd $PIPELINE_DIR && ./run_pipeline.sh -o $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 1> $GLUE_FOR_UD/$(basename $1 .conllu).compare 2> /dev/null)
+	# (cd $PIPELINE_DIR && ./run_pipeline.sh -o $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 1> $GLUE_FOR_UD/$(basename $1 .conllu).compare 2> /dev/null)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -o -f -X$1 $GLUE_FOR_UD/$2 1> $GLUE_FOR_UD/$(basename $1 .conllu).compare 2> /dev/null)
 }
 
 # Clean up generated files
