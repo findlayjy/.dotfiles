@@ -69,7 +69,7 @@ pipeline-verbose() {
 # With explanation
 pipeline-explain() {
 	# (cd $PIPELINE_DIR && ./run_pipeline.sh -e $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE)
-	(cd $PIPELINE_DIR && ./run_pipeline.sh -ef -X$1 $GLUE_FOR_UD/$2)
+	(cd $PIPELINE_DIR && ./run_pipeline.sh -e -f -X$1 $GLUE_FOR_UD/$2)
 }
 
 # Output to a file called '[...].compare' for comparison
