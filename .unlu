@@ -34,7 +34,7 @@ pipeline-inspect() {
 }
 
 # Output clause notation rather than DRS
-pipeline-clause-min() {
+pipeline-clause() {
 	# (cd $PIPELINE_DIR && ./run_pipeline.sh -c $GLUE_FOR_UD/$1 $RULES_FILE $CHOP_FILE $TEMPLATES_FILE 2> $GLUE_FOR_UD/log)
 	(cd $PIPELINE_DIR && ./run_pipeline.sh -c -f -X$1 $GLUE_FOR_UD/$2 2> $GLUE_FOR_UD/log)
     }
