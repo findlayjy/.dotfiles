@@ -59,26 +59,30 @@ alias inprog='cd ~/Dropbox/academic/in-progress'
 alias update='sudo apt update && sudo apt upgrade'
 
 # OTHER PROGRAMS
+# Emacs
 # Make it easier to open emacs clients
 # Open in existing emacs server
 alias emax='emacsclient -nc'
 # Same, but for Windows
 alias wemax='emacsclientw.exe'
+# Debugger for frozen Emacs; from this thread: https://www.reddit.com/r/emacs/comments/cz9w9r/how_to_debug_emacs_when_uses_100_of_one_cpu_core/
+alias unfreeze-emacs='killall -s USR2 emacs'
+
 # 'vi' as an alias for 'vim'
 alias vi='vim'
 # 'python' as an alias for 'python3'
 alias python='python3'
 
 # Connect to Oracle VM running Civ5 server and forward the relevant port
-alias civ-server-pf='ssh -L 5900:127.0.0.1:5900 opc@129.151.217.136'
+# alias civ-server-pf='ssh -L 5900:127.0.0.1:5900 opc@129.151.217.136'
 # Just connect and don't do any port forwarding
-alias civ-server='ssh opc@129.151.217.136'
+# alias civ-server='ssh opc@129.151.217.136'
 
 # WSL STUFF
 # Copy To Windows (i.e. copy file to Windows Downloads folder)
-ctw(){cp "$@" /mnt/c/Users/Jamie/Downloads}
+# ctw(){cp "$@" /mnt/c/Users/Jamie/Downloads}
 # Move to Windows (i.e. move tile to Windows Downloads folder)
-mtw(){mv "$@" /mnt/c/Users/Jamie/Downloads}
+# mtw(){mv "$@" /mnt/c/Users/Jamie/Downloads}
 
 ### ===KEY BINDS=== ###
 ## Making some keys behave as expected:
@@ -90,7 +94,7 @@ bindkey "^[[F" end-of-line
 bindkey "^[[3~" delete-char
 
 # For reasons as yet unknown (possibly just to do with Windows Terminal being what it is), my prompt doesn't display properly when the terminal is first opened, but on second loading it's fine -- so this just cleans that up.
-clear
+# clear
 
 ## PYENV (run different versions of Python)
 # setup
