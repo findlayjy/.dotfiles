@@ -45,10 +45,6 @@ gadmit(){git add $1 && git commit -m $2}
 alias gs='git status'
 
 # NAVIGATION SHORTCUTS
-# Switch to local UNLU project dir
-alias unlu-l='cd ~/Dropbox/academic/jobs/oslo-unlu-postdoc/project/git-repos/glue-for-UD'
-# Switch to remote UNLU dir containing github repos
-alias unlu-r='cd ~/foni/unlu/git-repos/glue-for-UD'
 # Switch to academic folder in Dropbox
 alias academic='cd ~/Dropbox/academic'
 # Switch to in-progress folder
@@ -72,6 +68,9 @@ alias unfreeze-emacs='killall -s USR2 emacs'
 alias vi='vim'
 # 'python' as an alias for 'python3'
 alias python='python3'
+
+# CONNECT TO RASPBERRY PI
+alias pi-connect='ssh jamie@pi.local'
 
 # Connect to Oracle VM running Civ5 server and forward the relevant port
 # alias civ-server-pf='ssh -L 5900:127.0.0.1:5900 opc@129.151.217.136'
@@ -103,8 +102,8 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 
-## Load UNLU shortcuts and commands
-[ -f $HOME/.unlu ] && source $HOME/.unlu
+## Load UiO config file with work-related shortcuts and commands
+[ -f $HOME/.uio ] && source $HOME/.uio
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

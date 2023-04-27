@@ -1,4 +1,16 @@
+# COMMANDS AND SETTINGS USEFUL WHILE AT UIO
+
+# EMAIL
+# ssh command to allow access to email through Thunderbird from off-site
+alias uio-mail-connect="ssh -f -N -D 10143 jamief@login.uio.no"
+
 # UNLU STUFF
+# Switch to local UNLU project dir
+alias unlu-l='cd ~/Dropbox/academic/jobs/oslo-unlu-postdoc/project/git-repos/glue-for-UD'
+# Switch to remote UNLU dir containing github repos
+alias unlu-r='cd ~/foni/unlu/git-repos/glue-for-UD'
+
+# SSH
 # Login to foni server and switch to zsh
 # alias foni="ssh jamief@foni.uio.no -t '/bin/zsh'"
 alias foni="ssh jamief@foni.uio.no -J jamief@login.uio.no -t '/bin/zsh'"
