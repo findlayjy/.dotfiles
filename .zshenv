@@ -1,3 +1,5 @@
+export DEFAULT_USER=jamief
+
 export PATH="${PATH}:$HOME/.local/bin"
 
 # Emacs
@@ -13,4 +15,3 @@ export PATH="$HOME/.pyenv/bin:$PATH"
 # Ruby
 export PATH="${PATH}:$HOME/.rbenv/bin"
 
-export DEFAULT_USER=jamief

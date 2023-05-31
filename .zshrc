@@ -26,21 +26,19 @@ test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
 # Source .zshrc file
 alias sr='source ~/.zshrc'
 # Edit .zshrc file
-alias er='vim ~/.zshrc'
+alias er='emacsclient -nc ~/.zshrc'
 
 # TERMINAL STUFF
 # Colorize the ls output 
 alias ls='ls --color=auto'
 # Use a long listing format
 alias ll='ls -la'
-# Show hidden files
+# List hidden files only
 alias l.='ls -d .*'
 
 # GIT
 # A shorter add + commit
 gadmit(){git add $1 && git commit -m $2}
-# Do this for the whole directory
-# alias gadmit='git add . && git commit -m'
 # Git status
 alias gs='git status'
 
@@ -60,7 +58,7 @@ alias update='sudo apt update && sudo apt upgrade'
 # Open in existing emacs server
 alias emax='emacsclient -nc'
 # Same, but for Windows
-alias wemax='emacsclientw.exe'
+# alias wemax='emacsclientw.exe'
 # Debugger for frozen Emacs; from this thread: https://www.reddit.com/r/emacs/comments/cz9w9r/how_to_debug_emacs_when_uses_100_of_one_cpu_core/
 alias unfreeze-emacs='killall -s USR2 emacs'
 
@@ -92,9 +90,6 @@ bindkey "^[[F" end-of-line
 # Delete key
 bindkey "^[[3~" delete-char
 
-# For reasons as yet unknown (possibly just to do with Windows Terminal being what it is), my prompt doesn't display properly when the terminal is first opened, but on second loading it's fine -- so this just cleans that up.
-# clear
-
 ## PYENV (run different versions of Python)
 # setup
 export PYENV_ROOT="$HOME/.pyenv"
@@ -105,18 +100,6 @@ eval "$(pyenv init -)"
 ## Load UiO config file with work-related shortcuts and commands
 [ -f $HOME/.uio ] && source $HOME/.uio
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/jamief/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/jamief/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/jamief/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/jamief/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
+# rbenv initialisation, for Ruby (used for Jekyll)
+eval "$(rbenv init - zsh)"
