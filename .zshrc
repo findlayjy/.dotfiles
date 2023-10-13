@@ -32,7 +32,7 @@ alias er='emacsclient -nc ~/.zshrc'
 # Colorize the ls output 
 alias ls='ls --color=auto'
 # Use a long listing format
-alias ll='ls -la'
+alias ll='ls -lah'
 # List hidden files only
 alias l.='ls -d .*'
 
@@ -70,11 +70,6 @@ alias python='python3'
 # CONNECT TO RASPBERRY PI
 alias pi-connect='ssh jamie@pi.local'
 
-# Connect to Oracle VM running Civ5 server and forward the relevant port
-# alias civ-server-pf='ssh -L 5900:127.0.0.1:5900 opc@129.151.217.136'
-# Just connect and don't do any port forwarding
-# alias civ-server='ssh opc@129.151.217.136'
-
 # WSL STUFF
 # Copy To Windows (i.e. copy file to Windows Downloads folder)
 # ctw(){cp "$@" /mnt/c/Users/Jamie/Downloads}
@@ -96,10 +91,8 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
-
 ## Load UiO config file with work-related shortcuts and commands
 [ -f $HOME/.uio ] && source $HOME/.uio
-
 
 # rbenv initialisation, for Ruby (used for Jekyll)
 eval "$(rbenv init - zsh)"
