@@ -27,6 +27,10 @@ test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
 alias sr='source ~/.zshrc'
 # Edit .zshrc file
 alias er='emacsclient -nc ~/.zshrc'
+# Source .zshevn file
+alias sv='source ~/.zshenv'
+# Edit .zshenv file
+alias ev='emacsclient -nc ~/.zshenv'
 
 # TERMINAL STUFF
 # Colorize the ls output 

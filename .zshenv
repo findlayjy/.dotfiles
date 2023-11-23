@@ -17,7 +17,7 @@ pathadd "$HOME/.config/emacs/bin"
 # My homebrew scripts
 pathadd "$HOME/Dropbox/git/scripts"
 # Running Stanza locally
-pathadd "$HOME/bin/stanza-parsing"
+pathadd "$HOME/stanza-parsing"
 
 # Pyenv
 pathadd "$PYENV_ROOT/bin"
