@@ -44,7 +44,8 @@ alias gs='git status'
 
 # NAVIGATION SHORTCUTS
 # Switch to academic folder in Dropbox
-alias academic='cd ~/Dropbox/academic'
+# alias academic='cd ~/Dropbox/academic'
+alias acad='cd ~/Dropbox/academic'
 # Switch to in-progress folder
 alias inprog='cd ~/Dropbox/academic/in-progress'
 
