@@ -101,3 +101,9 @@ eval "$(pyenv init -)"
 
 # rbenv initialisation, for Ruby (used for Jekyll)
 eval "$(rbenv init - zsh)"
+
+# Add autosuggestions for zsh to shell
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Add syntax highlighting for zsh to shell
+source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
