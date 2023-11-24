@@ -26,7 +26,8 @@ test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
 # Source .zshrc file
 alias sr='source ~/.zshrc'
 # Edit .zshrc file
-alias er='emacsclient -nc ~/.zshrc'
+# alias er='emacsclient -nc ~/.zshrc'
+alias er='nvim ~/.zshrc'
 # Source .zshevn file
 alias sv='source ~/.zshenv'
 # Edit .zshenv file
@@ -103,7 +104,47 @@ eval "$(pyenv init -)"
 eval "$(rbenv init - zsh)"
 
 # Add autosuggestions for zsh to shell
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Add syntax highlighting for zsh to shell
-source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _complete _ignored _approximate
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
+zstyle :compinstall filename '/home/jamief/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+# Antigen package manager #######################
+source ~/.zsh/antigen.zsh
+
+# Load the oh-my-zsh's library. See the list here: https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins
+antigen use oh-my-zsh
+
+## Some bundles
+# Adds autocompletion for pip
+antigen bundle pip
+# Suggests what package to install to use command if it is not available
+antigen bundle command-not-found
+# Syntax highlighting
+antigen bundle zsh-users/zsh-syntax-highlighting
+# Auto-suggestions
+antigen bundle zsh-users/zsh-autosuggestions
+# More completions
+antigen bundle zsh-users/zsh-completions
+# Search history substrings (needs to be loaded last?)
+# antigen bundle zsh-users/zsh-history-substring-search
+
+# Tell Antigen that you're done with bundles
+antigen apply
+
+# zsh-history-substring-search configuration
+# bindkey '^[[A' history-substring-search-up # or '\eOA'
+# bindkey '^[[B' history-substring-search-down # or '\eOB'
+# HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
+
+# End of Antigen package manager settings ########
