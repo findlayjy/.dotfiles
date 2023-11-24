@@ -31,16 +31,16 @@ window.opacity: 1.0
 
 font:
   normal:
-    family: "JetBrainsMono Nerd Font"
+    family: "JetBrainsMono NF"
     style: Regular
   bold:
-    family: "JetBrainsMono Nerd Font"
+    family: "JetBrainsMono NF"
     style: Bold
   italic:
-    family: "JetBrainsMono Nerd Font"
+    family: "JetBrainsMono NF"
     style: Italic
   bold_italic:
-    family: "JetBrainsMono Nerd Font"
+    family: "JetBrainsMono NF"
     style: Bold Italic
 
   # Point size
