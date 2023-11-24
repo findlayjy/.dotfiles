@@ -4,6 +4,3 @@
 [submodule ".zsh/zsh-syntax-highlighting"]
 	path = .zsh/zsh-syntax-highlighting
 	url = git@github.com:zsh-users/zsh-syntax-highlighting.git
-[submodule ".config/nvim"]
-	path = .config/nvim
-	url = https://github.com/NvChad/NvChad
