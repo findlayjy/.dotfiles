@@ -22,17 +22,23 @@ prompt jyf
 # If there is a .dir_colors file, import it
 test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
 
-# ALIASES
+# EDITING/RELOADING CONFIG FILES
+# Edit .zshrc file
+alias er='vim ~/.zshrc'
+# alias er='nvim ~/.zshrc'
+
 # Source .zshrc file
 alias sr='source ~/.zshrc'
-# Edit .zshrc file
-alias er='emacsclient -nw ~/.zshrc'
-# alias er='nvim ~/.zshrc'
+
+# Edit .zshenv file
+alias ev='vim ~/.zshenv'
+# alias ev='nvim ~/.zshenv'
+
 # Source .zshevn file
 alias sv='source ~/.zshenv'
-# Edit .zshenv file
-alias ev='emacsclient -nw ~/.zshenv'
-# alias ev='nvim ~/.zshenv'
+
+# Edit tmux config
+alias et='vim ~/.config/tmux/tmux.conf'
 
 # TERMINAL STUFF
 # Colorize the ls output 
