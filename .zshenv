@@ -6,8 +6,10 @@ pathadd() {
     fi
 }
 
-export DEFAULT_USER=jamief
+# Some variables
+export DEFAULT_USER='jamief'
 
+## ADDING TO $PATH
 pathadd "$HOME/.local/bin"
 
 # Emacs

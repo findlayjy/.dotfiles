@@ -22,16 +22,17 @@ prompt jyf
 # If there is a .dir_colors file, import it
 test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
 
-### ===ALIASES=== ###
+# ALIASES
 # Source .zshrc file
 alias sr='source ~/.zshrc'
 # Edit .zshrc file
-# alias er='emacsclient -nc ~/.zshrc'
-alias er='nvim ~/.zshrc'
+alias er='emacsclient -nw ~/.zshrc'
+# alias er='nvim ~/.zshrc'
 # Source .zshevn file
 alias sv='source ~/.zshenv'
 # Edit .zshenv file
-alias ev='emacsclient -nc ~/.zshenv'
+alias ev='emacsclient -nw ~/.zshenv'
+# alias ev='nvim ~/.zshenv'
 
 # TERMINAL STUFF
 # Colorize the ls output 
@@ -70,6 +71,11 @@ alias unfreeze-emacs='killall -s USR2 emacs'
 
 # 'vi' as an alias for 'vim'
 alias vi='vim'
+# WARNING: sacrilege
+# 'vim' as an alias for terminal emacs
+alias vim='emacsclient -nw'
+# 'vim' as an alias for neovim
+# alias vim='nvim'
 # 'python' as an alias for 'python3'
 alias python='python3'
 
@@ -103,14 +109,7 @@ eval "$(pyenv init -)"
 # rbenv initialisation, for Ruby (used for Jekyll)
 eval "$(rbenv init - zsh)"
 
-# Add autosuggestions for zsh to shell
-# source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# Add syntax highlighting for zsh to shell
-# source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 # The following lines were added by compinstall
-
 zstyle ':completion:*' completer _complete _ignored _approximate
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
 zstyle :compinstall filename '/home/jamief/.zshrc'
@@ -137,7 +136,7 @@ antigen bundle zsh-users/zsh-autosuggestions
 # More completions
 antigen bundle zsh-users/zsh-completions
 # Search history substrings (needs to be loaded last?)
-# antigen bundle zsh-users/zsh-history-substring-search
+antigen bundle zsh-users/zsh-history-substring-search
 
 # Tell Antigen that you're done with bundles
 antigen apply
