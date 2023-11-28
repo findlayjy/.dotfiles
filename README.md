@@ -1,5 +1,5 @@
 # Dotfiles
-Some config for my linux system. Currently using Pop!\_OS.
+Some config for my Linux system. Currently using Pop!\_OS.
 
 - Home directory files:
     - `.zsh`: contains prompt themes and [antigen](https://github.com/zsh-users/antigen) package manager.
