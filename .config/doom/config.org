@@ -1,0 +1,921 @@
+#+TITLE:    Emacs configuration
+#+AUTHOR:   Jamie Findlay
+#+LANGUAGE: en
+#+OPTIONS:  toc:nil num:nil
+#+STARTUP:  overview
+
+This is my configuration file for (Doom) Emacs. It is written using [[https://orgmode.org/][org mode]],
+which allows for a literate programming style, with code blocks interleaved with
+descriptive prose. (Doom handles the [[https://orgmode.org/manual/Extracting-Source-Code.html][tangling]], into /config.el/, via the =literate=
+switch in /init.el/) This is solely intended for my own use, but feel free to copy
+any hacks or solutions you happen to find useful!
+
+* DOOM settings
+** Setting the theme
+I like the =nord= theme:
+#+BEGIN_SRC emacs-lisp
+(setq doom-theme 'doom-nord)
+#+END_SRC
+
+=solarized= is also popular:
+#+BEGIN_SRC emacs-lisp
+;; (setq doom-theme 'solarized-dark)
+#+END_SRC
+
+This is the default theme:
+#+BEGIN_SRC emacs-lisp
+;; (setq doom-theme 'doom-one)
+#+END_SRC
+
+** Changing the image on the dashboard
+This replaces the default DOOM logo with the standard Emacs one, located in =.doom.d/images=.
+#+BEGIN_SRC emacs-lisp
+(when (file-exists-p "~/.doom.d/images")
+  (setq +doom-dashboard-banner-padding '(0 . 2)
+        +doom-dashboard-banner-file "medium-emacs-logo.png"
+        +doom-dashboard-banner-dir "~/.doom.d/images"))
+#+END_SRC
+
+** Font settings
+DOOM has three font settings (clearly more -- see unicode font variable below):
+1. =doom-font=
+2. =doom-variable-pitch-font=
+3. =doom-big-font= -- used for =doom-big-font-mode=; use this for presentations or streaming.
+
+Each of them takes a font-spec, font string ("Input Mono-12"), or xlfd font string.
+
+I'm currently trying out
+- +the Google font Inconsolata+ (it has no italic variant)
+- JetBrains Mono
+- +but might go back to InconsolataLGC, which has an italic variant.+ (nope -- this looks very fuzzy for whatever reason)
+- Others to try:
+  - Akkurat Mono?
+  - Fire Code
+TODO: use variable pitch font in Org mode? Need to find a better one ... ET
+Book? Plantin? /Garamond??/
+#+BEGIN_SRC emacs-lisp
+(setq doom-font (font-spec :family "JetBrainsMono NF" :size 14 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "Palatino Linotype" :size 16)
+     doom-variable-pitch-font (font-spec :family "Source Sans Pro" :size 14)
+               )
+#+END_SRC
+
+Setting a unicode font that has the right power line symbols for my terminal customisation.
+#+begin_src emacs-lisp
+(setq doom-unicode-font (font-spec :family "JetBrainsMono Nerd Font" :size 11))
+#+end_src
+
+* UI preferences
+** Line numbers
+Set default line number behaviour (=t=: absolute, =relative=: relative, =nil=: none).
+#+begin_src emacs-lisp
+(setq display-line-numbers-type t)
+#+end_src
+
+* Quality of life fixes
+** Switch to the new window after splitting
+By default, when the window is split the focus remains in the original window.
+Usually I'm splitting because I want to do something new in a separate window,
+so that isn't the behaviour I want.
+
+#+begin_src emacs-lisp
+(setq evil-split-window-below t
+      evil-vsplit-window-right t)
+#+end_src
+** Enable mouse in terminal Emacs
+#+begin_src emacs-lisp
+(setq xterm-mouse-mode 1)
+#+end_src
+
+** Change undo behaviour
+Undo by default considers anything taking place between entering insert mode and
+leaving it as one edit operation, which means you can lose a whole paragraph
+when you just want to undo a single word. This fixes that somewhat. The default
+behaviour seems to be different on my Macbook, which is why I've kept this in an
+OS-specific place. Need to investigate further. 20/9/21: this behaviour now also
+seems to happen on Mac (perhaps after updating to Big Sur?), so I'm making it a
+global change.
+#+begin_src emacs-lisp
+;; (when (eq system-type 'windows-nt)
+  (setq evil-want-fine-undo t)
+  ;; )
+#+end_src
+
+** Choose what files to hide when searching with ~counsel-locate~
+This hides files starting with =#= or =.=, or ending with =#= or =~=.
+#+begin_src emacs-lisp
+(setq counsel-find-file-ignore-regexp
+        (concat
+         ;; File names beginning with # or .
+         "\\(?:\\`[#.]\\)"
+         ;; File names ending with # or ~
+         "\\|\\(?:\\`.+?[#~]\\'\\)"))
+#+end_src
+
+** Allow Emacs to ask about potentially dangerous local variables
+Sometimes it's useful to evaluate elisp code in local variables. The default
+setting in Doom is to only allow ones previously identified as safe. This way
+Emacs asks if it encounters something new. So this is still pretty safe --
+things won't evaluate without my knowledge -- but it's a bit more flexible.
+#+begin_src emacs-lisp
+(setq enable-local-variables t)
+#+end_src
+
+** Start with auto-complete off
+#+begin_src emacs-lisp
+(after! company
+  (setq company-idle-delay nil)
+  )
+#+end_src
+
+** Change some keybindings
+Add some more familiar keybindings:
+- =C-s= saves
+- =C-/= comments/uncomments
+- (Ideally =C-z= would undo, but this is stubbornly set to =evil-emacs-state= ...)
+
+ #+begin_src emacs-lisp
+(when (eq system-type 'gnu/linux)
+  (global-set-key "\C-s" 'save-buffer)
+  (global-set-key [?\C-\/] 'evilnc-comment-or-uncomment-lines)
+  ;; (global-set-key "\C-z" 'undo)
+  )
+ #+end_src
+
+** Open =mailto= links with external program
+Using ~open~ to run default mail app rather than Emacs.
+#+begin_src emacs-lisp
+(when (eq system-type 'gnu/linux)
+  (setq browse-url-mailto-function 'browse-url-generic)
+  (setq browse-url-generic-program "open")
+  )
+#+end_src
+** Opening external files
+Set external apps to open some files.
+#+begin_src emacs-lisp
+(use-package! openwith
+  :after-call pre-command-hook
+  :config
+  (openwith-mode t)
+  (setq openwith-associations
+        (list
+         (list (openwith-make-extension-regexp
+                '("doc" "docx" "xls" "xlsx" "ppt" "odt" "ods" "odg" "odp"))
+               "libreoffice"
+               '(file))
+         (list (openwith-make-extension-regexp
+                '("pdf" "ps" "ps.gz" "dvi"))
+               "evince"
+               '(file))
+         ))
+  )
+#+end_src
+
+Settings for opening links in Org files.
+#+begin_src emacs-lisp
+(setq org-file-apps
+ '((auto-mode . emacs)
+   (directory . emacs)
+   ("\\.mm\\'" . default)
+   ("\\.x?html?\\'" . default)
+   ("\\.docx?\\'" . "libreoffice %s")
+   ("\\.xlsx?\\'" . "libreoffice %s")
+   ("\\.pdf\\'" . default)
+   )
+ )
+#+end_src
+
+* Projectile
+Stop projectile auto-detecting projects and filling the project list with random
+folders.
+#+begin_src emacs-lisp
+(setq projectile-track-known-projects-automatically nil)
+#+end_src
+
+* LaTeX
+** Stop flycheck mode operating in LaTeX modes
+Apparently a lot of how I write LaTeX upsets =flycheck=, so I just end up with a
+bunch of irrelevant error messages. This disables it.
+#+begin_src emacs-lisp
+(setq flycheck-global-modes '(not LaTeX-mode latex-mode))
+#+end_src
+
+** Turn off ~rainbow-delimiters~
+It seems to bug out every so often and highlight /every/ parenthesis going ...
+#+begin_src emacs-lisp
+(after! tex
+  (remove-hook 'TeX-update-style-hook #'rainbow-delimiters-mode))
+#+end_src
+
+** Start new LaTeX documents from templates
+Directory where we can find the templates.
+#+begin_src emacs-lisp
+(setq latex-templates-directory "~/Dropbox/git/latex-templates/templates/")
+#+end_src
+
+List of templates with keys for the ~new-latex~ function. Also abstract? 'research proposal' (from =latex-templates= folder)?
+#+begin_src emacs-lisp
+(setq latex-templates-list '(("Article" . "article-template.tex")
+                             ("Tufte-style handout" . "tufte-handout-template.tex")
+                             ("Plain" . "plain-template.tex")
+                             ("Conference presentation slides" . "conference-presentation-template.tex")
+                             ("Lecture slides" . "lecture-template.tex")
+                             ("Specify your own template file" . "")))
+#+end_src
+
+This is the function which makes a new LaTeX file from one of these templates.
+First it asks for one of the keys in the alist =latex-templates=, then, if the =cdr=
+of that =cons= cell is empty, prompts for the location of the template. Otherwise,
+it uses the value of the =cdr= and concatenates it with the value of
+=latex-templates-directory= and asks for a filename/location to copy it to. (The =1=
+argument to ~copy-file~ asks for confirmation if the file already exists.)
+#+begin_src emacs-lisp
+(defun new-latex ()
+  "Make a new LaTeX file based on a template. Asks for the template, then for a filename to copy it to."
+  (interactive)
+  (let* ((template (completing-read "Choose template: " latex-templates-list))
+         (template-filename (cdr (assoc template latex-templates-list))))
+    (if (string= template-filename"")
+        (progn
+          (copy-file (read-file-name "Find file: ") (setq new-latex-filename (read-file-name "Enter name for new file: ")) 1)
+          (find-file new-latex-filename)
+          )
+        (progn
+          (copy-file (concat latex-templates-directory template-filename) (setq new-latex-filename (read-file-name "Enter name for new file: ")) 1)
+          (find-file new-latex-filename)
+          )
+      )))
+#+end_src
+
+** Helm-bibtex
+Set default =.bib= file.
+#+begin_src emacs-lisp
+(setq bibtex-completion-bibliography '("~/Dropbox/tex-files/linguistics.bib"))
+#+end_src
+
+Keybind to launch =helm-bibtex= -- mapped to =SPC o h=.
+#+begin_src emacs-lisp
+(map! :leader
+      :desc "Helm BibTeX"
+      "o h" #'helm-bibtex)
+#+end_src
+
+Set cite commands available in =helm-bibtex=.
+#+begin_src emacs-lisp
+(setq bibtex-completion-cite-commands '("citet" "citep" "citealt" "citealp" "citets" "citealts"))
+(setq bibtex-completion-cite-default-command "citet")
+#+end_src
+
+Specify where PDFs are to be found. "Bibtex-completion assumes that the name of a PDF consists of the BibTeX key followed plus a user-defined suffix (=.pdf= by default). For example, if a BibTeX entry has the key =Darwin1859=, bibtex-completion searches for =Darwin1859.pdf=." (https://github.com/tmalsburg/helm-bibtex#PDF-files)
+#+begin_src emacs-lisp
+(setq bibtex-completion-library-path '("~/Dropbox/academic/papers"))
+#+end_src
+
+Specify the BibTeX field to use to specify the filename (I don't want to use the default =key.pdf= naming system since I've gotten used to my own way of doing things.).
+#+begin_src emacs-lisp
+(setq bibtex-completion-pdf-field "pdf")
+#+end_src
+
+=helm-bibtex= changed its commands to swap ~Tab~ and ~C-z~ **shrugs**, so I'm changing it back:
+#+begin_src emacs-lisp
+(map! :after helm
+           :map helm-map
+           "TAB"      #'helm-select-action
+           [tab]      #'helm-select-action
+           "C-z"      #'helm-execute-persistent-action)
+#+end_src
+
+* Deft
+Used just for =org-roam= searching at the moment.
+
+The =deft= directory is the same as my =org-roam= directory.
+#+begin_src emacs-lisp
+(setq deft-directory "~/Dropbox/org/my-wiki")
+#+end_src
+
+We're looking for =org= files, so set the default =deft= extension accordingly:
+#+begin_src emacs-lisp
+(setq deft-default-extension "org")
+#+end_src
+
+There is at least one sub-directory in my =org-roam= directory (the 'daily' directory), so allow =deft= to search recursively:
+#+begin_src emacs-lisp
+(setq deft-recursive t)
+#+end_src
+
+* Org mode
+** Set Org locations
+Set the Org directory. I keep my Org files on Dropbox for easy access across
+devices, including PCs at work, etc.
+#+begin_src emacs-lisp
+(setq org-directory "~/Dropbox/org/")
+#+end_src
+
+I use a single archive file which includes information about what file each
+entry comes from.
+#+begin_src emacs-lisp
+(setq org-archive-location "~/Dropbox/org/archive.org::* From %s")
+#+end_src
+
+Set files the agenda should pull from. =gcal= is where Google Calendar entries are
+stored (not used at the moment). =master= was my main Org file. =flagged= is where
+=org-mobile= entries are stored (also not used). =work= is for professional tasks,
+=personal= for personal ones. Also adding some project-specific files, like for
+UNLU.
+
+[UPDATE (11/5/22) -- the wrong, fully expanded option was being set in
+=custom.el=; no idea why I did that. But it's working happily again now. NOTE:
+this didn't use to need the ~after! org~ code, but then the =org-agenda-files= list
+started changing to a shorter list with fully expanded '=~=', etc. Possibly after
+I installed/configured =org-roam=? Maybe something to look at, but it seems happy
+now at any rate ... 15/1/22: had a related problem on Arch -- it set the list to
+fully expanded /Windows/ filepaths (i.e. =~= became =c:/Users/Jamie= ...). Simply
+evaluating the ~setq~ expression fixed it. And even though the bug originally
+happened with the ~after!~ block, removing it didn't help. It now seems happy
+again (24/1/22), but I still don't understand the source of the error.]
+#+begin_src emacs-lisp
+  (setq org-agenda-files (list "~/Dropbox/org/work.org" "~/Dropbox/org/master.org" "~/Dropbox/org/flagged.org" "~/Dropbox/org/personal.org" "~/Dropbox/academic/jobs/oslo-unlu-postdoc/project" "~/Dropbox/org/my-wiki" "~/Dropbox/org/my-wiki/daily"))
+#+end_src
+
+** General Org settings
+Add inline TODOs. (Removed for now. Not really compatible with how I do things.)
+#+begin_src emacs-lisp
+;; (require 'org-inlinetask)
+#+end_src
+
+Allow shift-select to work in most contexts.
+#+begin_src emacs-lisp
+(setq org-support-shift-select t)
+#+end_src
+
+Change filepath links to always be absolute. (Possible values are =absolute= and
+=relative=, with the obvious meanings, along with =noabbrev=, which is like =absolute=
+except that it doesn't abbreviate the home directory as =~=, and =adaptive=, which
+uses relative paths for files in or below the current directory, and absolute
+paths otherwise.)
+#+begin_src emacs-lisp
+(setq org-link-file-path-type 'absolute)
+#+end_src
+
+Setting the default TODO states.
+#+begin_src emacs-lisp
+(after! org
+  (setq org-todo-keywords '((sequence "TODO(t)" "INPROG(i)" "READING(r)" "BLOCKED(b)" "PROJ(p)" "SOMEDAY(s)" "|" "DONE(d)" "CANCELLED(c)"))))
+#+end_src
+
+Add some colour to my custom TODO keywords.
+#+begin_src emacs-lisp
+(after! org
+  (setq org-todo-keyword-faces '(("READING" . "#EBCB8B")
+                                 ("BLOCKED" . "#D08770")
+                                 ("PROJ" . "#9099AB")
+                                 ("SOMEDAY" . "#5699AF"))))
+#+end_src
+
+Set the levels of priority in org mode. Values below 65 are numerical, while
+from 65 upwards they are alphabetic (65=A, 66=B, etc.). I've included a slightly
+larger range of priorities: A--D, rather than A--C, and also set the default as
+C rather than B. This allows me to have two more-urgent-than-default stages (I'm
+using this for reading lists at the moment).
+#+begin_src emacs-lisp
+  (setq org-priority-highest 65
+      org-priority-lowest 68
+      org-priority-default 67)
+#+end_src
+
+Set the colours of the priority tags (THIS NEEDS PRETTIFYING: at the moment I'm
+just stopping D being red like A).
+#+begin_src emacs-lisp
+(after! org
+  (setq org-priority-faces '((65 . error)
+                           (66 . warning)
+                           (67 . success)
+                           (68 . success)))
+  )
+#+end_src
+
+I've not quite decided whether I like blocked tasks being greyed out or not. At
+the moment the only such tasks I have are PROJs.
+#+begin_src emacs-lisp
+(setq org-agenda-dim-blocked-tasks nil)
+#+end_src
+
+Add a timestamp to TODO items when they are changed to DONE.
+#+begin_src emacs-lisp
+(setq org-log-done 'time)
+#+end_src
+
+Use syntax highlighting in source blocks while editing.
+#+begin_src emacs-lisp
+(setq org-src-fontify-natively t)
+#+end_src
+
+Make TAB act as if it were issued in a buffer of the language’s major mode.
+#+begin_src emacs-lisp
+(setq org-src-tab-acts-natively t)
+#+end_src
+
+Have org files start out folded.
+#+begin_src emacs-lisp
+(after! org
+(setq org-startup-folded t)
+)
+#+end_src
+
+** Prettifying Org mode
+Make headlines larger.
+#+begin_src emacs-lisp
+(custom-set-faces!
+  `(org-level-1 :inherit outline-1 :height 1.5)
+  `(org-level-2 :inherit outline-2 :height 1.3)
+  `(org-level-3 :inherit outline-3 :height 1.15)
+  `(org-level-4 :inherit outline-4 :height 1.1)
+  `(org-document-title :inherit outline-1 :weight bold :height 2.0 :foreground ,(doom-color 'dark-blue))
+)
+#+end_src
+
+Hide emphasis markup.
+#+begin_src emacs-lisp
+(setq org-hide-emphasis-markers t)
+#+end_src
+
+Change Org mode to use proportional font by default. (Makes things a bit easier to
+read, but not sure it's really good in the long run, so disabled for now.)
+#+begin_src emacs-lisp
+;; (add-hook 'org-mode-hook 'variable-pitch-mode)
+#+end_src
+
+Change the default =...= at the end of a header into an arrow.
+#+begin_src emacs-lisp
+;; (setq org-ellipsis "⤵")
+;; (setq org-ellipsis "▼")
+;; (setq org-ellipsis "↴")
+#+end_src
+
+** Exporting
+*** General
+Translate quotes into typographically correct curly quotes (doesn't seem to work with HTML; maybe just PDF via LaTeX?).
+#+begin_src emacs-lisp
+(setq org-export-with-smart-quotes t)
+#+end_src
+
+*** HTML
+Don't include the footer with name/publication time etc. at the end of every HTML document.
+#+begin_src emacs-lisp
+(setq org-html-postamble nil)
+#+end_src
+
+*** LaTeX
+#+begin_src emacs-lisp
+(with-eval-after-load 'ox-latex
+(add-to-list 'org-latex-classes
+             '("org-plain-latex"
+               "\\documentclass{article}
+           [NO-DEFAULT-PACKAGES]
+           [PACKAGES]
+           [EXTRA]"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+end_src
+** Org-superstar
+=org-superstar= helps to prettify Org mode.
+
+Activate =superstar-mode= when =org-mode= is activated.
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+#+end_src
+
+Allow special bullets for different TODO keywords.
+#+begin_src emacs-lisp
+(setq org-superstar-special-todo-items t)
+#+end_src
+
+Change TODO items to an open bullet, WAITING to a half full one, DONE to a full one, and CANCELLED to a crossed-through empty bullet.
+#+begin_src emacs-lisp
+(setq org-superstar-todo-bullet-alist
+      '(("TODO" . ?○)
+        ("SOMEDAY" . ?○)
+        ("READING" . ?○)
+        ("INPROG" . ?◐)
+        ("DONE" . ?●)
+        ("CANCELLED" . ?⦻)
+        ))
+#+end_src
+
+Change the bullet point shape used for all normal headers.
+#+begin_src emacs-lisp
+(setq org-superstar-headline-bullets-list '("⁖"))
+;; (setq org-superstar-headline-bullets-list '("◉"))
+#+end_src
+
+** Custom structure templates
+Add a shortcut for including blocks of code to the =org-insert-structure-template=
+command (default kbd ~C-c C-,~).
+
+#+begin_src emacs-lisp
+(after! org
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+  (add-to-list 'org-structure-template-alist '("p" . "src python"))
+  (add-to-list 'org-structure-template-alist '("u" . "src unlu-rules"))
+  )
+#+end_src
+
+** Agenda/task management settings
+*** Basic settings
+Agenda items without a timestamp shouldn't be considered late.
+#+begin_src emacs-lisp
+(setq org-agenda-sort-notime-is-late nil)
+#+end_src
+
+*** Custom functions
+These functions are used for sorting and displaying agenda items in custom
+agenda views.
+
+~(print-deadline)~ returns an entry's deadline in the format "dd Mon yy" if it has
+one, otherwise returns "-".
+#+begin_src emacs-lisp
+(defun print-deadline () "Return an org-mode entry's deadline if it has one" ;;
+       (let
+           ((deadline (org-get-deadline-time (point))))
+         (if deadline
+             (concat "(" (org-format-time-string "%d %b '%y" deadline) ")")
+           (concat (make-string 5 ?\s) "-"))
+         )
+       )
+#+end_src
+
+~(org-get-padded-deadline SIZE)~ returns the result of ~print-deadline~ in the
+form of a string whose length is =SIZE=, i.e. either padded or trimmed as
+necessary.
+#+begin_src emacs-lisp
+(defun org-get-padded-deadline (size)
+  "Return string of length SIZE whether it contains a deadline
+  timestamp or whichever message is chosen for items without
+  deadline"
+  (let* ((dl-str (print-deadline))
+         (padding (- size (length dl-str))))
+    (if (< padding 0) (substring dl-str 0 size)
+      (concat dl-str (make-string padding ?\s ))))
+  )
+#+end_src
+
+~(org-get-padded-days-to-deadline SIZE)~ returns a string consisting of the
+number of days until the agenda item deadline followed by a "d", or the empty
+string if there is no deadline, padded to length =SIZE=.
+#+begin_src emacs-lisp
+(defun org-get-padded-days-to-deadline (size)
+  "Return string of length SIZE either containing the days to the
+  deadline if there is one, or nothing if not."
+  (let* ((deadline (org-get-deadline-time (point)))
+         (days-num (org-time-stamp-to-now (org-format-time-string "%Y-%m-%d" deadline)))
+         (days-str (if deadline
+                       (concat (number-to-string days-num) "d")
+                     ""
+                     ))
+         (padding (- size (length days-str)))
+         )
+    (if (< padding 0) (substring days-str 0 size)
+      (if (< days-num 0)
+          (concat days-str (make-string padding ?\s))
+          (concat " " days-str (make-string (- padding 1) ?\s))
+        ))
+    )
+  )
+#+end_src
+
+A function to retrieve the title attribute of an org-mode file. (From [[https://emacs.stackexchange.com/questions/27620/orgmode-capturing-original-document-title][here]].)
+#+begin_src emacs-lisp
+(defun get-title (file)
+  (let (title)
+    (when file
+      (with-current-buffer
+          (get-file-buffer file)
+        (pcase (org-collect-keywords '("TITLE"))
+          (`(("TITLE" . ,val))
+           (setq title (car val)))))
+      title)))
+#+end_src
+
+If the agenda item is from my private or professional org files, then
+~(org-get-padded-todo-parent SIZE)~ returns a string containing its parent's
+label, padded to length =SIZE=. If it is from another file, the org-mode =TITLE= of
+the file is used instead.
+#+begin_src emacs-lisp
+(defun org-get-padded-todo-parent (size)
+  "Return string of length SIZE containing either padded or truncated parent name."
+  (if (or (equal (file-name-nondirectory buffer-file-name) "personal.org") (equal (file-name-nondirectory buffer-file-name) "work.org"))
+      (let* ((parent (car (last(org-get-outline-path))))
+             (padding (- size (length parent))))
+             (if (<= padding 0) (concat "[" (substring parent 0 (- size 1)) "] " ) (concat "[" parent "]" (make-string padding ?\s ))))
+      (let* ((parent (get-title buffer-file-name))
+             (padding (- size (length parent))))
+        (if (< padding 0) (concat "[" (substring parent 0 (- size 1)) "] ") (concat "[" parent "]" (make-string padding ?\s ))))
+      ))
+#+end_src
+
+This version adds a slash between the file name and the heading if it's not from
+the files listed at the top.
+#+begin_src emacs-lisp
+;; (defun org-get-padded-todo-parent (size)
+;;   "Return string of length SIZE containing either padded or truncated parent name."
+;;   (if (or (equal (file-name-nondirectory buffer-file-name) "personal.org") (equal (file-name-nondirectory buffer-file-name) "work.org"))
+;;       (let* ((parent (car (last(org-get-outline-path))))
+;;              (padding (- size (length parent))))
+;;              (if (< padding 0) (concat "[" (substring parent 0 (- size 1)) "] " ) (concat "[" parent "]" (make-string padding ?\s ))))
+;;       (let* ((parent (concat (get-title buffer-file-name) "/" (car (last(org-get-outline-path)))))
+;;              (padding (- size (length parent))))
+;;         (if (< padding 0) (concat "[" (substring parent 0 (- size 1)) "] ") (concat "[" parent "]" (make-string padding ?\s ))))
+;;       ))
+#+end_src
+
+This version adds a special leading string if the agenda item is from one of the
+listed files.
+#+begin_src emacs-lisp
+;; (defun org-get-padded-todo-parent (size)
+;;   "Return string of length SIZE containing either padded or truncated parent name."
+;;   (cond ((equal (file-name-nondirectory buffer-file-name) "private.org")
+;;                 (let* ((parent (concat "Personal/" (car (last(org-get-outline-path)))))
+;;                        (padding (- size (length parent))))
+;;                        (if (< padding 0) (concat "[" (substring parent 0 (- size 1)) "] " ) (concat "[" parent "]" (make-string padding ?\s )))))
+;;         ((equal (file-name-nondirectory buffer-file-name) "work.org")
+;;                 (let* ((parent (concat "Work/" (car (last(org-get-outline-path)))))
+;;                        (padding (- size (length parent))))
+;;                        (if (< padding 0) (concat "[" (substring parent 0 (- size 1)) "] " ) (concat "[" parent "]" (make-string padding ?\s )))))
+;;         (t (let* ((parent (concat (get-title buffer-file-name) "/" (car (last(org-get-outline-path)))))
+;;                   (padding (- size (length parent))))
+;;                   (if (< padding 0) (concat "[" (substring parent 0 (- size 1)) "] ") (concat "[" parent "]" (make-string padding ?\s )))))
+;;   )
+;; )
+#+end_src
+
+~(org-deadline-cmp A B)~ compares deadlines of org agenda entries =A= and =B=. The
+standard =deadline-up=​/​=deadline-down=, which uses ~org-cmp-ts~, seems not to sort
+entries with no deadline appropriately (they all appear at the top, regardless
+of the setting of =org-agenda-sort-notime-is-late=).
+#+begin_src emacs-lisp
+(defun org-deadline-cmp (a b)
+  "Compares the deadlines of two org agenda items, a and b,
+and returns -1 if a is before b, or +1 if a is after b"
+    (let* (
+           (default (if org-agenda-sort-notime-is-late -1 most-positive-fixnum))
+           (a-pos (get-text-property 0 'org-marker a))
+           (b-pos (get-text-property 0 'org-marker b))
+           (a-string (org-entry-get a-pos "DEADLINE"))
+           (b-string (org-entry-get b-pos "DEADLINE"))
+           (a-num (if a-string (org-2ft a-string) default))
+           (b-num (if b-string (org-2ft b-string) default))
+           )
+          (cond ((< a-num b-num) -1)
+          ((< b-num a-num) +1))
+        ))
+#+end_src
+
+*** Custom agenda views
+The 'prefix' for TODO lists determines what gets displayed before the actual
+TODO item. I like to show the days until the deadline, the actual deadline, and
+what the parent of the TODO item is. (This uses the functions defined in the
+previous section.)
+#+begin_src emacs-lisp
+(defun org-agenda-todo-custom-prefix ()
+  "Custom prefix for my TODO list view in the agenda"
+  (concat (org-get-padded-days-to-deadline 6) (org-get-padded-deadline 14)  (org-get-padded-todo-parent 18))
+  )
+#+end_src
+
+This function (from [[https:lists.gnu.org/archive/html/emacs-orgmode/2015-06/msg00266.html][here]]) hides agenda blocks with no entries.
+#+begin_src emacs-lisp
+ (defun org-agenda-delete-empty-blocks ()
+  "Remove empty agenda blocks.
+  A block is identified as empty if there are fewer than 2
+  non-empty lines in the block (excluding the line with
+  `org-agenda-block-separator' characters)."
+  (when org-agenda-compact-blocks
+    (user-error "Cannot delete empty compact blocks"))
+  (setq buffer-read-only nil)
+  (save-excursion
+    (goto-char (point-min))
+    (let* ((blank-line-re "^\\s-*$")
+           (content-line-count (if (looking-at-p blank-line-re) 0 1))
+           (start-pos (point))
+           (block-re (format "%c\\{10,\\}" org-agenda-block-separator)))
+      (while (and (not (eobp)) (forward-line))
+        (cond
+         ((looking-at-p block-re)
+          (when (< content-line-count 2)
+            (delete-region start-pos (1+ (point-at-bol))))
+          (setq start-pos (point))
+          (forward-line)
+          (setq content-line-count (if (looking-at-p blank-line-re) 0 1)))
+         ((not (looking-at-p blank-line-re))
+          (setq content-line-count (1+ content-line-count)))))
+      (when (< content-line-count 2)
+        (delete-region start-pos (point-max)))
+      (goto-char (point-min))
+      ;; The above strategy can leave a separator line at the beginning
+      ;; of the buffer.
+      (when (looking-at-p block-re)
+        (delete-region (point) (1+ (point-at-eol))))))
+  (setq buffer-read-only t))
+#+end_src
+
+We then add it to the =org-agenda-finalize-hook=.
+#+begin_src emacs-lisp
+(add-hook 'org-agenda-finalize-hook #'org-agenda-delete-empty-blocks)
+#+end_src
+
+Use my own deadline sorting function as the user-defined one.
+#+begin_src emacs-lisp
+(setq org-agenda-cmp-user-defined 'org-deadline-cmp)
+#+end_src
+
+My own agenda view, which makes use of the custom prefix and splits up the TODOs
+into different blocks. I need to work out what I want from the agenda proper, so
+for now I've left it out. I also have a 'test view' that I use for
+experimenting. TODOs are sorted with the most pressing at the top.
+#+begin_src emacs-lisp
+(setq org-agenda-custom-commands
+        '(("c" "My agenda view"
+           (
+            (todo "TODO|INPROG" (
+                         (org-agenda-overriding-header "Uncategorised TODOs")
+                         (org-agenda-files '("~/Dropbox/org/my-wiki/daily"))
+                         (org-agenda-prefix-format '((todo . "%(org-agenda-todo-custom-prefix)")))
+                         ;;(org-agenda-cmp-user-defined 'org-deadline-cmp-3)
+                         (org-agenda-sorting-strategy '((todo user-defined-up)))
+                         )
+                  )
+            (todo "BLOCKED" (
+                         (org-agenda-overriding-header "Blocked uncategorised TODOs")
+                         (org-agenda-files '("~/Dropbox/org/my-wiki/daily"))
+                         (org-agenda-prefix-format '((todo . "%(org-agenda-todo-custom-prefix)")))
+                         (org-agenda-sorting-strategy '((todo user-defined-up)))
+                         )
+                     )
+            (todo "TODO|INPROG" (
+                         (org-agenda-overriding-header "Personal TODOs")
+                         (org-agenda-files '("~/Dropbox/org/personal.org"))
+                         (org-agenda-prefix-format '((todo . "%(org-agenda-todo-custom-prefix)")))
+                         ;;(org-agenda-cmp-user-defined 'org-deadline-cmp-3)
+                         (org-agenda-sorting-strategy '((todo user-defined-up)))
+                         )
+                  )
+            (todo "BLOCKED" (
+                         (org-agenda-overriding-header "Blocked personal TODOs")
+                         (org-agenda-files '("~/Dropbox/org/personal.org"))
+                         (org-agenda-prefix-format '((todo . "%(org-agenda-todo-custom-prefix)")))
+                         (org-agenda-sorting-strategy '((todo user-defined-up)))
+                         )
+                     )
+            (todo "TODO|INPROG" (
+                         (org-agenda-overriding-header "Professional TODOs")
+                         ;; Using a regexp to match things I don't want in my professional TODOs: in this case, the dir my-wiki, along with the subdir daily, and my personal.org file.
+                         ;; I don't just specify work.org explicitly, as I want to allow other project files to be included.
+                         (org-agenda-files (cl-remove-if (lambda (x) (string-match "\\(?:my-wiki\\(?:/daily\\)?\\|personal\\.org\\)" x)) org-agenda-files))
+                         (org-agenda-prefix-format '((todo . "%(org-agenda-todo-custom-prefix)")))
+                         ;;(org-agenda-cmp-user-defined 'org-deadline-cmp-3)
+                         (org-agenda-sorting-strategy '((todo user-defined-up)))
+                         )
+                  )
+            (todo "BLOCKED" (
+                         (org-agenda-overriding-header "Blocked professional TODOs")
+                         ;; Using a regexp to match things I don't want in my professional TODOs: in this case, the dir my-wiki, along with the subdir daily, and my personal.org file.
+                         ;; I don't just specify work.org explicitly, as I want to allow other project files to be included.
+                         (org-agenda-files (cl-remove-if (lambda (x) (string-match "\\(?:my-wiki\\(?:/daily\\)?\\|personal\\.org\\)" x)) org-agenda-files))
+                         (org-agenda-prefix-format '((todo . "%(org-agenda-todo-custom-prefix)")))
+                         (org-agenda-sorting-strategy '((todo user-defined-up)))
+                         )
+                     )
+            ;; (todo "TODO|INPROG" (
+            ;;              (org-agenda-overriding-header "Wiki TODOs")
+            ;;              (org-agenda-files '("~/Dropbox/org/my-wiki"))
+            ;;              (org-agenda-prefix-format '((todo . "%(org-agenda-todo-custom-prefix)")))
+            ;;              ;;(org-agenda-cmp-user-defined 'org-deadline-cmp-3)
+            ;;              (org-agenda-sorting-strategy '((todo user-defined-up)))
+            ;;              )
+            ;;       )
+            (todo "BLOCKED" (
+                         (org-agenda-overriding-header "Blocked wiki TODOs")
+                         (org-agenda-files '("~/Dropbox/org/my-wiki"))
+                         (org-agenda-prefix-format '((todo . "%(org-agenda-todo-custom-prefix)")))
+                         (org-agenda-sorting-strategy '((todo user-defined-up)))
+                         )
+                     )
+            (todo "PROJ" (
+                         (org-agenda-overriding-header "Ongoing projects")
+                         (org-agenda-prefix-format '((todo . "%(org-agenda-todo-custom-prefix)")))
+                         (org-agenda-sorting-strategy '((todo user-defined-up)))
+                         )
+                     )
+            (tags "PRIORITY=\"A\"+TODO=\"READING\"|PRIORITY=\"B\"+TODO=\"READING\"" (
+                         (org-agenda-overriding-header "Priority reading list")
+                         (org-agenda-prefix-format '((tags . "%(org-agenda-todo-custom-prefix)")))
+                         (org-agenda-sorting-strategy '((tags user-defined-up priority-down)))
+                         )
+                  )
+            (todo "SOMEDAY" (
+                             (org-agenda-overriding-header "Things to get round to some day ...")
+                             (org-agenda-prefix-format '((todo . "%(org-agenda-todo-custom-prefix)")))
+                             (org-agenda-sorting-strategy '((todo user-defined-up)))
+                             )
+                     )
+            ;; (agenda "")
+            )
+           )
+          ("r" "Reading lists"
+           (
+            (todo "READING" (
+                             (org-agenda-prefix-format '((todo . "%(org-agenda-todo-custom-prefix)")))
+                             (org-agenda-sorting-strategy '((todo user-defined-up priority-down)))
+                             )
+                  )
+            )
+           )
+          ("w" "This week"
+           ((tags-todo "this_week" (
+                         (org-agenda-overriding-header "To do this week")
+                         (org-agenda-prefix-format "%(org-agenda-todo-custom-prefix)")
+                         (org-agenda-sorting-strategy '((user-defined-up priority-down)))
+                        )
+                     )
+            )
+          )
+        ;;   ("R" "Test view"
+        ;;    ((alltodo "" (
+        ;;                  (org-agenda-prefix-format '((todo . "%(org-agenda-custom-prefix)")))
+        ;;                  (org-agenda-cmp-user-defined 'deadline-sort)
+        ;;                  (org-agenda-sorting-strategy '((todo user-defined-up)))
+        ;;                 )
+        ;;              )
+        ;;     )
+        ;;   )
+        )
+  )
+  #+end_src
+
+** Org-capture
+First, a function which can be called when capturing an item to ask under what
+headline it should be filed (a pared down version of this solution:
+https://stackoverflow.com/a/24787118)
+#+begin_src emacs-lisp
+(defun org-ask-location ()
+    (let* ((org-refile-targets '((nil :maxlevel . 9)))
+           (hd (car (cdr (cdr (org-refile-get-location "Headline" nil t)))))
+           )
+      (goto-char (point-min))
+      (re-search-forward hd nil nil)
+      )
+    (end-of-line))
+#+end_src
+
+My capture templates -- simple for now: TODO entries for personal and
+professional tasks, and one to add something to my (professional) reading list
+#+begin_src emacs-lisp
+(after! org
+  (setq org-capture-templates
+        '(
+          ("p" "Personal TODO item" entry (file+headline "personal.org" "To-do list")
+           "* TODO %?")
+          ;;
+          ("w" "Work TODO item" entry (file+headline "work.org" "To-do list")
+           "* TODO %?")
+          ;;
+          ("r" "READING item" entry (file+headline "work.org" "Reading list")
+           "* READING %?")
+          ))
+  )
+#+end_src
+
+** Org-roam
+Set the =org-roam= directory:
+#+begin_src emacs-lisp
+(setq org-roam-directory "~/Dropbox/org/my-wiki")
+#+end_src
+* Generic modes
+Add some nice syntax highlighting for the =rules.dat= file in the UNLU project.
+#+begin_src emacs-lisp
+   (define-generic-mode
+      'unlu-rules-mode                          ;; name of the mode to create
+      '("# " "##")                              ;; comments start with '#'
+      '("relation" "coarsePos"
+        "lemma")                                ;; some keywords
+      '(
+        ("![\\{)a-z ]" . font-lock-variable-name-face)
+        ("\\^" . font-lock-variable-name-face)
+        ("=" . font-lock-builtin-face)
+        ("->" . font-lock-builtin-face)
+        (";" . font-lock-builtin-face)
+        ("-o" . font-lock-builtin-face)
+        ("+" . font-lock-builtin-face)
+        (":" . font-lock-builtin-face)
+        ("~" . font-lock-negation-char-face)
+        ;; ("\\\\[a-zA-Z]" . font-lock-constant-face)
+        ("#[1-9]" . font-lock-type-face)
+        )                                       ;; extra highlights
+      '("\\.dat$")                              ;; files for which to activate this mode
+      '(rainbow-delimiters-mode)                ;; other functions to call
+      "A mode for the UNLU project rule file"   ;; doc string for this mode
+    )
+#+end_src
