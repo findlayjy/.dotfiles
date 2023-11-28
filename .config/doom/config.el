@@ -4,10 +4,28 @@
 
 ;; (setq doom-theme 'doom-one)
 
-(when (file-exists-p "~/.doom.d/images")
+(when (file-exists-p (concat doom-private-dir "images"))
   (setq +doom-dashboard-banner-padding '(0 . 2)
-        +doom-dashboard-banner-file "medium-emacs-logo.png"
-        +doom-dashboard-banner-dir "~/.doom.d/images"))
+        fancy-splash-image (concat doom-private-dir "images/medium-emacs-logo.png")))
+
+(defun minimal-banner-fn ()
+  (let* ((banner '("██████╗"
+                   "██╔═══██╗"
+                   "██║██╗██║"
+                   "██║██║██║"
+                   "╚█║████╔╝"
+                   "╚╝╚═══╝ "))
+         (longest-line (apply #'max (mapcar #'length banner))))
+    (put-text-property
+     (point)
+     (dolist (line banner (point))
+       (insert (+doom-dashboard--center
+                +doom-dashboard--width
+                (concat line (make-string (max 0 (- longest-line (length line))) 32)))
+               "\n"))
+     'face 'doom-dashboard-banner)))
+
+(setq +doom-dashboard-ascii-banner-fn #'minimal-banner-fn)
 
 (setq doom-font (font-spec :family "JetBrainsMono NF" :size 14 :weight 'semi-light)
       doom-variable-pitch-font (font-spec :family "Palatino Linotype" :size 16)
