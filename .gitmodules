@@ -1,6 +1,3 @@
-[submodule ".config/emacs"]
-	path = .config/emacs
-	url = https://github.com/doomemacs/doomemacs
 [submodule ".config/doom"]
 	path = .config/doom
 	url = git@github.com:findlayjy/.doom.d.git
