@@ -24,21 +24,21 @@ test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
 
 # EDITING/RELOADING CONFIG FILES
 # Edit .zshrc file
-alias er='vim ~/.zshrc'
+alias er='emax ~/.zshrc'
 # alias er='nvim ~/.zshrc'
 
 # Source .zshrc file
 alias sr='source ~/.zshrc'
 
 # Edit .zshenv file
-alias ev='vim ~/.zshenv'
+alias ev='emax ~/.zshenv'
 # alias ev='nvim ~/.zshenv'
 
 # Source .zshevn file
 alias sv='source ~/.zshenv'
 
 # Edit tmux config
-alias et='vim ~/.config/tmux/tmux.conf'
+alias et='emax ~/.config/tmux/tmux.conf'
 
 # TERMINAL STUFF
 # Colorize the ls output 
@@ -84,6 +84,10 @@ alias vim='emacsclient -nw'
 # alias vim='nvim'
 # 'python' as an alias for 'python3'
 alias python='python3'
+
+# DUMB STUFF
+# Hollywood hacker screen
+alias hacker='sudo docker run --rm -it bcbcarl/hollywood'
 
 # CONNECT TO RASPBERRY PI
 alias pi-connect='ssh jamie@pi.local'
@@ -153,3 +157,6 @@ bindkey '^[[B' history-substring-search-down # or '\eOB'
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 # End of Antigen package manager settings ########
+
+# ghcup-env (Haskell)
+[ -f "/home/jamief/.ghcup/env" ] && source "/home/jamief/.ghcup/env"
