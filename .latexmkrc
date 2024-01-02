@@ -1,4 +1,4 @@
-$pdf_mode = 1;
+# $pdf_mode = 1;
 $preview_continuous_mode = 1;
 $pdf_previewer = 'open %O %S';
 # $pdflatex = "xelatex %O %S";
