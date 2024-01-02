@@ -117,7 +117,7 @@ eval "$(pyenv init -)"
 [ -f $HOME/.uio ] && source $HOME/.uio
 
 # rbenv initialisation, for Ruby (used for Jekyll)
-eval "$(rbenv init - zsh)"
+# eval "$(rbenv init - zsh)"
 
 # The following lines were added by compinstall
 zstyle ':completion:*' completer _complete _ignored _approximate
