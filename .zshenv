@@ -9,9 +9,23 @@ xpathadd() {
     fi
 }
 
-# SPECIFICALLY, ADD ELEMENTS TO $PATH
+# THE SAME, BUT ADDING TO THE START INSTEAD OF THE END OF THE PATH VAR
+xpathprepend() {
+    local VAR="$1"
+    local DIR="$2"
+    if [ -d "$DIR" ] && [[ ":${(P)VAR}:" != *":$DIR:"* ]]; then
+        eval "export $VAR=\"$DIR${(P)VAR:+\":\$$VAR\"}\""
+    fi
+}
+
+# SPECIFICALLY, ADD ELEMENTS TO the end of $PATH
 pathadd() {
     xpathadd "PATH" "${1}"
+}
+
+# OR TO THE START
+pathprepend() {
+    xpathprepend "PATH" "${1}"
 }
 
 ## OLD VERSION WITH PATH HARD-CODED (from here: https://superuser.com/a/39995)
@@ -59,7 +73,7 @@ pathadd "$HOME/stanza-parsing"
 # TeX Live
 manadd "/usr/local/texlive/2023/texmf-dist/doc/man"
 infoadd "/usr/local/texlive/2023/texmf-dist/doc/info"
-pathadd "/usr/local/texlive/2023/bin/x86_64-linux"
+pathprepend "/usr/local/texlive/2023/bin/x86_64-linux"
 
 # Pyenv
 pathadd "$PYENV_ROOT/bin"
