@@ -3,7 +3,7 @@
 
 # Lists of dotfiles
 home_dotfiles=(.zsh .zshrc .zshenv .dir_colors .vimrc .latexmkrc .condarc)
-config_dotfiles=(alacritty albert autostart neofetch ranger nvim emacs doom)
+config_dotfiles=(alacritty albert autostart neofetch ranger nvim doom)
 
 
 # Symlink dotfile to home directory if not already present there
