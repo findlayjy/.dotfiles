@@ -9,14 +9,17 @@ colors
 # Add my custom themes folder to fpath
 fpath+=(~/.zsh/themes)
 
-# Initialize the prompt system 
-autoload -U promptinit 
+# Initialize the prompt system
+autoload -U promptinit
 promptinit
 
 prompt jyf
 
 # A minimal prompt
 # PROMPT='%B%F{240}%1~%f%b %(!.#.>) '
+
+### ===END OF THEME/PROMPT PERSONALISATION=== ###
+
 
 ## Loading custom dircolors
 # If there is a .dir_colors file, import it
@@ -34,7 +37,7 @@ alias sr='source ~/.zshrc'
 alias ev='emax ~/.zshenv'
 # alias ev='nvim ~/.zshenv'
 
-# Source .zshevn file
+# Source .zshenv file
 alias sv='source ~/.zshenv'
 
 # Edit tmux config
@@ -64,6 +67,14 @@ alias inprog='cd ~/Dropbox/academic/in-progress'
 # POP!_OS SHORTCUTS
 # update apps
 alias sys-update='sudo apt update && sudo apt upgrade'
+
+# PYTHON VIRTUAL ENVIRONMENT MANAGEMENT
+# Create a virtual environment in a directory .venv
+alias venv-create='python -m venv .venv'
+# Activate that environment
+alias venv-activate='source .venv/bin/activate'
+# Just for parallelism
+alias venv-deactivate='deactivate'
 
 # OTHER PROGRAMS
 # Emacs
@@ -128,7 +139,7 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
-# Antigen package manager #######################
+# ANTIGEN PACKAGE MANAGER #######################
 source ~/.zsh/antigen.zsh
 
 # Load the oh-my-zsh's library. See the list here: https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins
@@ -156,7 +167,37 @@ bindkey '^[[A' history-substring-search-up # or '\eOA'
 bindkey '^[[B' history-substring-search-down # or '\eOB'
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
-# End of Antigen package manager settings ########
+# END OF ANTIGEN PACKAGE MANAGER SETTINGS ########
+
 
 # ghcup-env (Haskell)
 [ -f "/home/jamief/.ghcup/env" ] && source "/home/jamief/.ghcup/env"
+
+# opam configuration
+[[ ! -r /home/jamief/.opam/opam-init/init.zsh ]] || source /home/jamief/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+
+
+## CONDA
+# Update conda
+alias conda-update='conda update --name base --channel defaults --yes conda'
+alias mamba-update='mamba update --name base --yes mamba'
+
+## MAMBA
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/jamief/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/jamief/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/home/jamief/miniforge3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/jamief/miniforge3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+
+if [ -f "/home/jamief/miniforge3/etc/profile.d/mamba.sh" ]; then
+    . "/home/jamief/miniforge3/etc/profile.d/mamba.sh"
+fi
+# <<< conda initialize <<<
