@@ -8,12 +8,12 @@ Some config for my Linux system. Currently using Pop!\_OS.
     - `.vimrc`: minimal config file for [Vim](https://www.vim.org/) (though I mostly use [Emacs](https://www.gnu.org/software/emacs/), and am experimenting with [Neovim](https://neovim.io/)).
     - `.zshenv`: setting environment variables for [Zsh](https://www.zsh.org/) sessions.
     - `.zshrc`: config for Zsh
+    - `.condarc`: config file for [Conda](https://docs.conda.io/en/latest/).
 - Config files for
     - `alacritty`: config for [Alacritty](https://github.com/alacritty/alacritty) terminal emulator
     - `albert`: config for the [Albert launcher](https://github.com/albertlauncher/albert)
     - `autostart`: Programs to run on startup
     - `doom`: [(Doom) Emacs](https://github.com/doomemacs/doomemacs) personal config (see there for more info)
-    - `emacs`: the basic Doom setup
     - `neofetch`: [Neofetch](https://github.com/dylanaraps/neofetch) config
     - `nvim`: a (for the moment) minimal [Nvim](https://neovim.io/) config
     - `ranger`: config for the [Ranger](https://github.com/ranger/ranger) file manager (not actively using this)
