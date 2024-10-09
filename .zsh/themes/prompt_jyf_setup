@@ -53,9 +53,9 @@ prompt_end() {
 prompt_status() {
   local symbols
   symbols=()
-  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}$CROSS"
-  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}$GEAR"
-  [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}$LIGHTNING"
+  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}$CROSS "
+  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}$GEAR "
+  [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}$LIGHTNING "
   #
   [[ -n "$symbols" ]] && prompt_segment $PRIMARY_FG default " $symbols"
 }
@@ -78,7 +78,9 @@ prompt_dir() {
 
 # Display conda environment
 conda_env() {
+  if [[ -n $CONDA_PROMPT_MODIFIER ]]; then
   prompt_segment magenta $PRIMARY_FG " $SNAKE$CONDA_PROMPT_MODIFIER"
+  fi
 }
 
 ## Git: branch/detached head, dirty status
@@ -124,8 +126,8 @@ prompt_git() {
 prompt_jyf_main() {
   RETVAL=$?
   CURRENT_BG='NONE'
-  prompt_status
   conda_env
+  prompt_status
   prompt_context
   prompt_dir
   prompt_git
