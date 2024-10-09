@@ -185,8 +185,10 @@ alias mamba-update='mamba update --name base --yes mamba'
 ## MAMBA
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/jamief/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
+# Hacked to fix terminal startup slowness following this suggestion: https://github.com/ContinuumIO/anaconda-issues/issues/10173#issuecomment-429044015.
+# To return to standard setup, uncomment the line starting __conda_setup, and change 1 to $? in the if condition so that the condition is not always false.
+# __conda_setup="$('/home/jamief/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ 1 -eq 0 ]; then
     eval "$__conda_setup"
 else
     if [ -f "/home/jamief/miniforge3/etc/profile.d/conda.sh" ]; then
