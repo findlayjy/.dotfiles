@@ -5,6 +5,7 @@
 # [ ] Change colour of prompt when in SSH connection
 
 # Colours
+# Supported colors: red, blue, green, cyan, yellow, magenta, black, white
 CURRENT_BG='NONE'
 PRIMARY_FG=black
 
@@ -16,6 +17,7 @@ DETACHED="\u27a6"
 CROSS="\u2718"
 LIGHTNING="\u26a1"
 GEAR="\u2699"
+SNAKE="\xF0\x9F\x90\x8D"
 
 # Begin a segment: 
 # takes two arguments, background colour and foreground (text) colour. 
@@ -74,6 +76,11 @@ prompt_dir() {
   prompt_segment blue $PRIMARY_FG " %2~ "
 }
 
+# Display conda environment
+conda_env() {
+  prompt_segment magenta $PRIMARY_FG " $SNAKE$CONDA_PROMPT_MODIFIER"
+}
+
 ## Git: branch/detached head, dirty status
 prompt_git() {
   local color ref
@@ -118,6 +125,7 @@ prompt_jyf_main() {
   RETVAL=$?
   CURRENT_BG='NONE'
   prompt_status
+  conda_env
   prompt_context
   prompt_dir
   prompt_git
