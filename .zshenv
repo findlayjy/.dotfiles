@@ -101,3 +101,6 @@ export TCL_LIBRARY=${XLEPATH}/tcl/scripts/tcl
 export TKLIBPATH=${XLEPATH}/tcl/scripts/tk
 export TK_LIBRARY=${XLEPATH}/tcl/scripts/tk
 
+# Stanford CoreNLP Java JAR
+xpathadd "CLASSPATH" "$HOME/stanford-corenlp/stanford-corenlp-4.5.6"
+# export CLASSPATH="$HOME/stanford-corenlp/stanford-corenlp-4.5.6/stanford-corenlp-4.5.6.jar"
