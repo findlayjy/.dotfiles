@@ -3,7 +3,7 @@ Some config for my Linux system. Currently using Pop!\_OS.
 
 - Home directory files:
     - `.zsh`: contains prompt themes and [antigen](https://github.com/zsh-users/antigen) package manager.
-    - `.dircolors`: [Nord](https://www.nordtheme.com/ports/dircolors) dircolors.
+    - `.dir_colors`: [Nord](https://www.nordtheme.com/ports/dircolors) dircolors.
     - `.latexmkrc`: configuration for [latexmk](https://www.cantab.net/users/johncollins/latexmk/)
     - `.vimrc`: minimal config file for [Vim](https://www.vim.org/) (though I mostly use [Emacs](https://www.gnu.org/software/emacs/), and am experimenting with [Neovim](https://neovim.io/)).
     - `.zshenv`: setting environment variables for [Zsh](https://www.zsh.org/) sessions.
