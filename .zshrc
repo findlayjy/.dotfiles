@@ -91,6 +91,8 @@ alias vi='vim'
 # WARNING: sacrilege
 # 'vim' as an alias for terminal emacs
 alias vim='emacsclient -nw'
+# 'Vim' to get access to vanilla vim
+alias Vim='/usr/bin/vim'
 # 'vim' as an alias for neovim
 # alias vim='nvim'
 # 'python' as an alias for 'python3'
