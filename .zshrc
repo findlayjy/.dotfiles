@@ -90,9 +90,9 @@ alias unfreeze-emacs='killall -s USR2 emacs'
 alias vi='vim'
 # WARNING: sacrilege
 # 'vim' as an alias for terminal emacs
-alias vim='emacsclient -nw'
+#alias vim='emacsclient -nw'
 # 'Vim' to get access to vanilla vim
-alias Vim='/usr/bin/vim'
+#alias Vim='/usr/bin/vim'
 # 'vim' as an alias for neovim
 # alias vim='nvim'
 # 'python' as an alias for 'python3'
@@ -205,3 +205,10 @@ if [ -f "/home/jamief/miniforge3/etc/profile.d/mamba.sh" ]; then
     . "/home/jamief/miniforge3/etc/profile.d/mamba.sh"
 fi
 # <<< conda initialize <<<
+
+## NIXOS SETTINGS AND SHORTCUTS ##
+# Rebuild for this machine
+alias rebuild="sudo nixos-rebuild switch --flake ~/nixos-config#$(hostname)" 
+
+# Garbage collection
+alias cleanup="sudo nix-collect-garbage -d"
