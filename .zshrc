@@ -122,9 +122,9 @@ bindkey "^[[3~" delete-char
 
 ## PYENV (run different versions of Python)
 # setup
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+#export PYENV_ROOT="$HOME/.pyenv"
+#command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+#eval "$(pyenv init -)"
 
 ## Load UiO config file with work-related shortcuts and commands
 [ -f $HOME/.uio ] && source $HOME/.uio
