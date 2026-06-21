@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=xinput disable 20
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_GB]=Disable touch screen
+Name=Disable touch screen
+Comment[en_GB]=
+Comment=
