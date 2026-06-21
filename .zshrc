@@ -208,7 +208,7 @@ fi
 
 ## NIXOS SETTINGS AND SHORTCUTS ##
 # Rebuild for this machine
-alias rebuild="sudo nixos-rebuild switch --flake ~/nixos-config#$(hostname)" 
+alias rebuild="sudo nixos-rebuild switch --flake ~/nixos-config#$(hostname) --impure" 
 
 # Garbage collection
 alias cleanup="sudo nix-collect-garbage -d"
