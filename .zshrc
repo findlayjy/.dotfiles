@@ -90,9 +90,9 @@ alias unfreeze-emacs='killall -s USR2 emacs'
 alias vi='vim'
 # WARNING: sacrilege
 # 'vim' as an alias for terminal emacs
-alias vim='emacsclient -nw'
+#alias vim='emacsclient -nw'
 # 'Vim' to get access to vanilla vim
-alias Vim='/usr/bin/vim'
+#alias Vim='/usr/bin/vim'
 # 'vim' as an alias for neovim
 # alias vim='nvim'
 # 'python' as an alias for 'python3'
@@ -122,9 +122,9 @@ bindkey "^[[3~" delete-char
 
 ## PYENV (run different versions of Python)
 # setup
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+#export PYENV_ROOT="$HOME/.pyenv"
+#command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+#eval "$(pyenv init -)"
 
 ## Load UiO config file with work-related shortcuts and commands
 [ -f $HOME/.uio ] && source $HOME/.uio
@@ -219,6 +219,7 @@ swc() {
 
 ## NIXOS SETTINGS AND SHORTCUTS ##
 # Rebuild for this machine
+# (--impure flag needed because dotfiles are sourced from a separate repo, i.e. this flake is not self-contained) 
 alias rebuild="sudo nixos-rebuild switch --flake ~/nixos-config#$(hostname) --impure"
 
 # Garbage collection

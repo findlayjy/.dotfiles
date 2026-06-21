@@ -76,8 +76,8 @@ infoadd "/usr/local/texlive/2023/texmf-dist/doc/info"
 pathprepend "/usr/local/texlive/2023/bin/x86_64-linux"
 
 # Pyenv
-pathadd "$PYENV_ROOT/bin"
-pathadd "$HOME/.pyenv/bin"
+#pathadd "$PYENV_ROOT/bin"
+#pathadd "$HOME/.pyenv/bin"
 
 # Ruby
 pathadd "$HOME/.rbenv/bin"
