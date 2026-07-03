@@ -206,9 +206,21 @@ if [ -f "/home/jamief/miniforge3/etc/profile.d/mamba.sh" ]; then
 fi
 # <<< conda initialize <<<
 
+# Software carpentries
+swc() {
+    # Launches bash with a minimalist prompt and a fake home directory
+    local fakehome="/home/jamief/Dropbox/academic/teaching/software-carpentries/2026-03-06-unix-shell/nelle"
+    HOME="$fakehome" bash --init-file <(printf "%s\n" \
+        "source /home/jamief/.bashrc" \
+        "PS1='\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '" \
+        "cd" \
+        "clear" )
+}
+
 ## NIXOS SETTINGS AND SHORTCUTS ##
 # Rebuild for this machine
-alias rebuild="sudo nixos-rebuild switch --flake ~/nixos-config#$(hostname) --impure" 
+# (--impure flag needed because dotfiles are sourced from a separate repo, i.e. this flake is not self-contained) 
+alias rebuild="sudo nixos-rebuild switch --flake ~/nixos-config#$(hostname) --impure"
 
 # Garbage collection
 alias cleanup="sudo nix-collect-garbage -d"
