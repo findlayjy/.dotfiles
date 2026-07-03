@@ -18,6 +18,7 @@ CROSS="\u2718"
 LIGHTNING="\u26a1"
 GEAR="\u2699"
 SNAKE="\xF0\x9F\x90\x8D"
+LAMBDA="\u03bb"
 
 # Begin a segment: 
 # takes two arguments, background colour and foreground (text) colour. 
@@ -83,6 +84,14 @@ conda_env() {
   fi
 }
 
+# Am I in a Nix shell?
+nix_shell_status() {
+  if [[ -n "$MY_IN_NIX_SHELL" ]]; then
+  prompt_segment magenta $PRIMARY_FG " $LAMBDA "
+  fi
+}
+
+
 ## Git: branch/detached head, dirty status
 prompt_git() {
   local color ref
@@ -127,6 +136,7 @@ prompt_jyf_main() {
   RETVAL=$?
   CURRENT_BG='NONE'
   conda_env
+  nix_shell_status
   prompt_status
   prompt_context
   prompt_dir
@@ -139,12 +149,22 @@ prompt_jyf_precmd() {
   PROMPT='%{%f%b%k%}$(prompt_jyf_main) '
 }
 
+# Check whether in a Nix shell (`nix-shell` sets the variable IN_NIX_SHELL, but `nix shell` does not)
+precmd_in_nix_shell() {
+  if echo "$PATH" | grep -qc '/nix/store'; then
+    export MY_IN_NIX_SHELL=yes
+  else
+    unset MY_IN_NIX_SHELL
+  fi
+}
+
 prompt_jyf_setup() {
   autoload -Uz add-zsh-hook
   autoload -Uz vcs_info
 
   prompt_opts=(cr subst percent)
 
+  add-zsh-hook precmd precmd_in_nix_shell
   add-zsh-hook precmd prompt_jyf_precmd
 
   zstyle ':vcs_info:*' enable git
