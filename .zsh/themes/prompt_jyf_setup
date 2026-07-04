@@ -86,7 +86,7 @@ conda_env() {
 
 # Am I in a Nix shell?
 nix_shell_status() {
-  if [[ -n "$MY_IN_NIX_SHELL" ]]; then
+  if [[ -n "$MY_IN_NIX_SHELL" || -n "$IN_NIX_SHELL" ]]; then
   prompt_segment magenta $PRIMARY_FG " $LAMBDA "
   fi
 }
