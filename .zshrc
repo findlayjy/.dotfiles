@@ -224,3 +224,6 @@ alias rebuild="sudo nixos-rebuild switch --flake ~/nixos-config#$(hostname) --im
 
 # Garbage collection
 alias cleanup="sudo nix-collect-garbage -d"
+
+# Rollback to previous generation
+alias rollback="sudo nixos-rebuild switch --rollback"
