@@ -1,6 +1,6 @@
 $pdf_mode = 1;
 $preview_continuous_mode = 1;
-$pdf_previewer = 'open %O %S';
+$pdf_previewer = 'xdg-open %O %S';
 # $pdflatex = "xelatex %O %S";
 
 # $ENV{'TEXINPUTS'}='$HOME/Dropbox/git/latex-templates;$HOME/Dropbox/tex-files//:' . $ENV{'TEXINPUTS'};
