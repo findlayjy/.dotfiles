@@ -1,0 +1,9 @@
+{
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "Return",
+        description: Some("Alacritty"),
+    ): Spawn("alacritty"),
+}

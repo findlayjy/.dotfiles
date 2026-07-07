@@ -1,0 +1,9 @@
+(
+    rules: "",
+    model: "pc104",
+    layout: "gb",
+    variant: "",
+    options: Some("terminate:ctrl_alt_bksp,compose:ralt"),
+    repeat_delay: 600,
+    repeat_rate: 25,
+)
