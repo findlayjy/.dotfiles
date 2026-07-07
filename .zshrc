@@ -80,11 +80,19 @@ alias venv-deactivate='deactivate'
 # Emacs
 # Make it easier to open emacs clients
 # Open in existing emacs server
-alias emax='emacsclient -nc'
+# alias emax='emacsclient -c'
+emax() {
+#   # Launch the client with -c, but run it asynchronously in the background
+  emacsclient -c "$@" >/dev/null 2>&1
+#   # Disown the background job
+#   disown
+}
 # Same, but for Windows
 # alias wemax='emacsclientw.exe'
 # Debugger for frozen Emacs; from this thread: https://www.reddit.com/r/emacs/comments/cz9w9r/how_to_debug_emacs_when_uses_100_of_one_cpu_core/
 alias unfreeze-emacs='killall -s USR2 emacs'
+# Restart emacs when running as a systemd process after updating doom
+alias doom-reload="doom sync && systemctl --user restart emacs"
 
 # 'vi' as an alias for 'vim'
 alias vi='vim'
@@ -219,8 +227,9 @@ swc() {
 
 ## NIXOS SETTINGS AND SHORTCUTS ##
 # Rebuild for this machine
-# (--impure flag needed because dotfiles are sourced from a separate repo, i.e. this flake is not self-contained) 
-alias rebuild="sudo nixos-rebuild switch --flake ~/nixos-config#$(hostname) --impure"
+# (--impure flag needed if dotfiles are sourced from a separate repo and copied to nix store; I am just having home manager symlink them instead)
+#alias rebuild="sudo nixos-rebuild switch --flake ~/nixos-config#$(hostname) --impure"
+alias rebuild="sudo nixos-rebuild switch --flake ~/nixos-config#$(hostname)"
 
 # Garbage collection
 alias cleanup="sudo nix-collect-garbage -d"
