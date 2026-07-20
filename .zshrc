@@ -80,7 +80,8 @@ alias venv-deactivate='deactivate'
 # Emacs
 # Make it easier to open emacs clients
 # Open in existing emacs server
-# alias emax='emacsclient -c'
+# alias emax='emacsclient -nc'
+# Previous alias not working on Cosmic with emacs running as a systemd service. Needs fixing, but this is a workaround
 emax() {
 #   # Launch the client with -c, but run it asynchronously in the background
   emacsclient -c "$@" >/dev/null 2>&1
