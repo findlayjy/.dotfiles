@@ -83,11 +83,12 @@ alias venv-deactivate='deactivate'
 # alias emax='emacsclient -nc'
 # Previous alias not working on Cosmic with emacs running as a systemd service. Needs fixing, but this is a workaround
 emax() {
-#   # Launch the client with -c, but run it asynchronously in the background
+  # Launch the client with -c, but run it asynchronously in the background
   emacsclient -c "$@" >/dev/null 2>&1
-#   # Disown the background job
-#   disown
 }
+
+alias em='emacsclient -nw'
+
 # Same, but for Windows
 # alias wemax='emacsclientw.exe'
 # Debugger for frozen Emacs; from this thread: https://www.reddit.com/r/emacs/comments/cz9w9r/how_to_debug_emacs_when_uses_100_of_one_cpu_core/
