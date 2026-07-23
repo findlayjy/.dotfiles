@@ -1,9 +1,53 @@
 {
     (
+        modifiers: [],
+        key: "XF86AudioLowerVolume",
+    ): System(VolumeLower),
+    (
+        modifiers: [
+            Ctrl,
+            Alt,
+            Shift,
+        ],
+        key: "Up",
+    ): System(VolumeRaise),
+    (
+        modifiers: [
+            Ctrl,
+            Alt,
+            Shift,
+        ],
+        key: "space",
+    ): System(PlayPause),
+    (
         modifiers: [
             Super,
         ],
         key: "Return",
         description: Some("Alacritty"),
     ): Spawn("alacritty"),
+    (
+        modifiers: [
+            Ctrl,
+            Alt,
+            Shift,
+        ],
+        key: "Left",
+    ): System(PlayPrev),
+    (
+        modifiers: [
+            Ctrl,
+            Alt,
+            Shift,
+        ],
+        key: "Right",
+    ): System(PlayNext),
+    (
+        modifiers: [
+            Ctrl,
+            Alt,
+            Shift,
+        ],
+        key: "Down",
+    ): System(VolumeLower),
 }
