@@ -104,3 +104,6 @@ export TK_LIBRARY=${XLEPATH}/tcl/scripts/tk
 # Stanford CoreNLP Java JAR
 xpathadd "CLASSPATH" "$HOME/stanford-corenlp/stanford-corenlp-4.5.6"
 # export CLASSPATH="$HOME/stanford-corenlp/stanford-corenlp-4.5.6/stanford-corenlp-4.5.6.jar"
+
+# Attempting to fix weird cursor on Nix apps
+# export XCURSOR_THEME="Pop"
