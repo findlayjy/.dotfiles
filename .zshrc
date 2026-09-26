@@ -231,10 +231,12 @@ swc() {
 # Rebuild for this machine
 # (--impure flag needed if dotfiles are sourced from a separate repo and copied to nix store; I am just having home manager symlink them instead)
 #alias rebuild="sudo nixos-rebuild switch --flake ~/nixos-config#$(hostname) --impure"
-alias rebuild="sudo nixos-rebuild switch --flake ~/nixos-config#$(hostname)"
+# alias rebuild="sudo nixos-rebuild switch --flake ~/nixos-config#$(hostname)" # for full NixOS install
+alias rebuild="home-manager switch --flake ~/nix-config#$(hostname)" # for Home Manager on other OSs
 
 # Garbage collection
-alias cleanup="sudo nix-collect-garbage -d"
+# alias cleanup="sudo nix-collect-garbage -d"
+alias cleanup="nix-collect-garbage -d"
 
 # Rollback to previous generation
 alias rollback="sudo nixos-rebuild switch --rollback"
