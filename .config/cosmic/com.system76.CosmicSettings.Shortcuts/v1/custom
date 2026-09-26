@@ -1,8 +1,27 @@
 {
     (
-        modifiers: [],
-        key: "XF86AudioLowerVolume",
+        modifiers: [
+            Alt,
+        ],
+        key: "space",
+        description: Some("Albert"),
+    ): Spawn("albert toggle"),
+    (
+        modifiers: [
+            Ctrl,
+            Alt,
+            Shift,
+        ],
+        key: "Down",
     ): System(VolumeLower),
+    (
+        modifiers: [
+            Ctrl,
+            Alt,
+            Shift,
+        ],
+        key: "Left",
+    ): System(PlayPrev),
     (
         modifiers: [
             Ctrl,
@@ -20,6 +39,10 @@
         key: "space",
     ): System(PlayPause),
     (
+        modifiers: [],
+        key: "XF86AudioLowerVolume",
+    ): System(VolumeLower),
+    (
         modifiers: [
             Super,
         ],
@@ -32,22 +55,6 @@
             Alt,
             Shift,
         ],
-        key: "Left",
-    ): System(PlayPrev),
-    (
-        modifiers: [
-            Ctrl,
-            Alt,
-            Shift,
-        ],
         key: "Right",
     ): System(PlayNext),
-    (
-        modifiers: [
-            Ctrl,
-            Alt,
-            Shift,
-        ],
-        key: "Down",
-    ): System(VolumeLower),
 }

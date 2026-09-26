@@ -5,6 +5,6 @@
         grid: 100,
     ),
     show_details: false,
-    show_hidden: false,
+    show_hidden: true,
     view: List,
 )
