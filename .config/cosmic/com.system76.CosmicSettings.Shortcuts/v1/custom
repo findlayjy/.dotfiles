@@ -1,19 +1,46 @@
 {
     (
         modifiers: [
-            Alt,
-        ],
-        key: "space",
-        description: Some("Albert"),
-    ): Spawn("albert toggle"),
-    (
-        modifiers: [
             Ctrl,
             Alt,
             Shift,
         ],
         key: "Down",
     ): System(VolumeLower),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "Return",
+    ): System(Terminal),
+    (
+        modifiers: [
+            Ctrl,
+            Alt,
+            Shift,
+        ],
+        key: "Up",
+    ): System(VolumeRaise),
+    (
+        modifiers: [],
+        key: "XF86AudioLowerVolume",
+    ): System(VolumeLower),
+    (
+        modifiers: [
+            Ctrl,
+            Alt,
+            Shift,
+        ],
+        key: "space",
+    ): System(PlayPause),
+    (
+        modifiers: [
+            Ctrl,
+            Alt,
+            Shift,
+        ],
+        key: "Right",
+    ): System(PlayNext),
     (
         modifiers: [
             Ctrl,
@@ -24,37 +51,9 @@
     ): System(PlayPrev),
     (
         modifiers: [
-            Ctrl,
             Alt,
-            Shift,
-        ],
-        key: "Up",
-    ): System(VolumeRaise),
-    (
-        modifiers: [
-            Ctrl,
-            Alt,
-            Shift,
         ],
         key: "space",
-    ): System(PlayPause),
-    (
-        modifiers: [],
-        key: "XF86AudioLowerVolume",
-    ): System(VolumeLower),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "Return",
-        description: Some("Alacritty"),
-    ): Spawn("alacritty"),
-    (
-        modifiers: [
-            Ctrl,
-            Alt,
-            Shift,
-        ],
-        key: "Right",
-    ): System(PlayNext),
+        description: Some("Find files"),
+    ): Spawn("cosmic-launcher input \"find \""),
 }
