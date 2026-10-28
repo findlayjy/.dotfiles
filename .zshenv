@@ -107,3 +107,6 @@ xpathadd "CLASSPATH" "$HOME/stanford-corenlp/stanford-corenlp-4.5.6"
 
 # Attempting to fix weird cursor on Nix apps
 # export XCURSOR_THEME="Pop"
+
+# Loading home-manager session variables
+[ -f ~/.nix-profile/etc/profile.d/hm-session-vars.sh ] && . ~/.nix-profile/etc/profile.d/hm-session-vars.sh
