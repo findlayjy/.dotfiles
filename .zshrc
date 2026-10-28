@@ -80,12 +80,12 @@ alias venv-deactivate='deactivate'
 # Emacs
 # Make it easier to open emacs clients
 # Open in existing emacs server
-# alias emax='emacsclient -nc'
-# Previous alias not working on Cosmic with emacs running as a systemd service. Needs fixing, but this is a workaround
-emax() {
-  # Launch the client with -c, but run it asynchronously in the background
-  emacsclient -c "$@" >/dev/null 2>&1
-}
+alias emax='emacsclient -nc'
+# # Previous alias not working on Cosmic with emacs running as a systemd service. Needs fixing, but this is a workaround
+# emax() {
+#   # Launch the client with -c, but run it asynchronously in the background
+#   emacsclient -c "$@" >/dev/null 2>&1
+# }
 
 alias em='emacsclient -nw'
 
@@ -107,6 +107,8 @@ alias vi='vim'
 # alias vim='nvim'
 # 'python' as an alias for 'python3'
 alias python='python3'
+# 'xclip' copies to keyboard
+alias xclip='xclip -selection clipboard'
 
 # DUMB STUFF
 # Hollywood hacker screen
