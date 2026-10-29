@@ -1,0 +1,66 @@
+[
+    (
+        output: (
+            name: "DP-6",
+            edid: Some((
+                manufacturer: ('H', 'P', 'N'),
+                product: 13428,
+                serial: Some(16843009),
+                manufacture_week: 34,
+                manufacture_year: 2018,
+                model_year: None,
+            )),
+        ),
+        tiling_enabled: false,
+        id: Some("1f42225"),
+        name: None,
+    ),
+    (
+        output: (
+            name: "DP-6",
+            edid: Some((
+                manufacturer: ('H', 'P', 'N'),
+                product: 13428,
+                serial: Some(16843009),
+                manufacture_week: 34,
+                manufacture_year: 2018,
+                model_year: None,
+            )),
+        ),
+        tiling_enabled: false,
+        id: Some("99e0a0"),
+        name: None,
+    ),
+    (
+        output: (
+            name: "DP-6",
+            edid: Some((
+                manufacturer: ('H', 'P', 'N'),
+                product: 13428,
+                serial: Some(16843009),
+                manufacture_week: 34,
+                manufacture_year: 2018,
+                model_year: None,
+            )),
+        ),
+        tiling_enabled: false,
+        id: Some("1d51a4f"),
+        name: None,
+    ),
+    (
+        output: (
+            name: "DP-6",
+            edid: Some((
+                manufacturer: ('H', 'P', 'N'),
+                product: 13428,
+                serial: Some(16843009),
+                manufacture_week: 34,
+                manufacture_year: 2018,
+                model_year: None,
+            )),
+        ),
+        tiling_enabled: false,
+        id: Some("1a6a530"),
+        name: None,
+    ),
+]

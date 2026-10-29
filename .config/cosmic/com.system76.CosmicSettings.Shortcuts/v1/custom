@@ -15,24 +15,11 @@
     ): System(Terminal),
     (
         modifiers: [
-            Ctrl,
             Alt,
-            Shift,
-        ],
-        key: "Up",
-    ): System(VolumeRaise),
-    (
-        modifiers: [],
-        key: "XF86AudioLowerVolume",
-    ): System(VolumeLower),
-    (
-        modifiers: [
-            Ctrl,
-            Alt,
-            Shift,
         ],
         key: "space",
-    ): System(PlayPause),
+        description: Some("Albert"),
+    ): Spawn("albert toggle"),
     (
         modifiers: [
             Ctrl,
@@ -47,13 +34,26 @@
             Alt,
             Shift,
         ],
+        key: "space",
+    ): System(PlayPause),
+    (
+        modifiers: [
+            Ctrl,
+            Alt,
+            Shift,
+        ],
+        key: "Up",
+    ): System(VolumeRaise),
+    (
+        modifiers: [
+            Ctrl,
+            Alt,
+            Shift,
+        ],
         key: "Left",
     ): System(PlayPrev),
     (
-        modifiers: [
-            Alt,
-        ],
-        key: "space",
-        description: Some("Find files"),
-    ): Spawn("cosmic-launcher input \"find \""),
+        modifiers: [],
+        key: "XF86AudioLowerVolume",
+    ): System(VolumeLower),
 }
