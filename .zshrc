@@ -66,7 +66,7 @@ alias inprog='cd ~/Dropbox/academic/in-progress'
 
 # POP!_OS SHORTCUTS
 # update apps
-alias sys-update='sudo apt update && sudo apt upgrade'
+alias sys-update='sudo apt update && sudo apt upgrade && flatpak update'
 
 # PYTHON VIRTUAL ENVIRONMENT MANAGEMENT
 # Create a virtual environment in a directory .venv
