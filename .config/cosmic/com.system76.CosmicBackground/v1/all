@@ -1,6 +1,6 @@
 (
     output: "all",
-    source: Path("/usr/share/backgrounds/cosmic/orion_nebula_nasa_heic0601a.jpg"),
+    source: Path("/home/jamief/Dropbox/personal/Wallpapers/2022-05-21-17-34-40-wp8134503-winter-nordic-wallpapers.jpg"),
     filter_by_theme: true,
     rotation_frequency: 300,
     filter_method: Lanczos,
