@@ -1,44 +1,58 @@
 [
     {
-        "iconPath": ":google",
-        "name": "Google",
-        "trigger": "gg ",
-        "url": "https://www.google.com/search?q=%s"
-    },
-    {
-        "iconPath": ":youtube",
-        "name": "Youtube",
-        "trigger": "yt ",
-        "url": "https://www.youtube.com/results?search_query=%s"
-    },
-    {
+        "fallback": false,
         "iconPath": ":amazon",
+        "id": "bb4b2895",
         "name": "Amazon",
-        "trigger": "ama ",
+        "trigger": "ama",
         "url": "http://www.amazon.com/s/?field-keywords=%s"
     },
     {
+        "fallback": false,
+        "iconPath": ":duckduckgo",
+        "id": "0344e0c9",
+        "name": "DuckDuckGo",
+        "trigger": "dd",
+        "url": "https://duckduckgo.com/?q=%s"
+    },
+    {
+        "fallback": false,
         "iconPath": ":ebay",
+        "id": "28a28524",
         "name": "Ebay",
-        "trigger": "eb ",
+        "trigger": "eb",
         "url": "http://www.ebay.com/sch/i.html?_nkw=%s"
     },
     {
+        "fallback": true,
         "iconPath": ":github",
+        "id": "eafb08ae",
         "name": "GitHub",
-        "trigger": "gh ",
+        "trigger": "gh",
         "url": "https://github.com/search?utf8=✓&q=%s"
     },
     {
+        "fallback": true,
+        "iconPath": ":google",
+        "id": "0edd2bb1",
+        "name": "Google",
+        "trigger": "gg",
+        "url": "https://www.google.com/search?q=%s"
+    },
+    {
+        "fallback": false,
         "iconPath": ":wolfram",
+        "id": "5eaffb08",
         "name": "Wolfram Alpha",
         "trigger": "=",
         "url": "https://www.wolframalpha.com/input/?i=%s"
     },
     {
-        "iconPath": ":duckduckgo",
-        "name": "DuckDuckGo",
-        "trigger": "dd ",
-        "url": "https://duckduckgo.com/?q=%s"
+        "fallback": false,
+        "iconPath": ":youtube",
+        "id": "ad7fa534",
+        "name": "Youtube",
+        "trigger": "yt",
+        "url": "https://www.youtube.com/results?search_query=%s"
     }
 ]

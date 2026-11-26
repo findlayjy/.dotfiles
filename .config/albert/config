@@ -11,6 +11,9 @@ terminal=Alacritty
 [albert]
 global_handler_enabled=true
 
+[application]
+enabled=true
+
 [applications]
 enabled=true
 global_handler_enabled=true
@@ -26,6 +29,9 @@ enabled=true
 global_handler_enabled=true
 
 [calculator_qalculate]
+enabled=true
+
+[commandline]
 enabled=true
 
 [files]
@@ -87,6 +93,9 @@ displaySystemShadow=false
 windowPosition=@Point(609 216)
 
 [terminal]
+enabled=true
+
+[websearch]
 enabled=true
 
 [widgetsboxmodel]

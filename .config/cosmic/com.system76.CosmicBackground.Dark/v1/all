@@ -1,0 +1,10 @@
+(
+    output: "all",
+    source: Path("/home/jamief/Dropbox/personal/Wallpapers/2022-05-21-17-34-40-wp8134503-winter-nordic-wallpapers.jpg"),
+    filter_by_theme: true,
+    rotation_frequency: 300,
+    transition_duration: 500,
+    filter_method: Lanczos,
+    scaling_mode: Zoom,
+    sampling_method: Alphanumeric,
+)
